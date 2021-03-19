@@ -34,7 +34,7 @@ Overview with examples: [Link](https://docs.djangoproject.com/en/3.1/intro/tutor
 Get everything in a table: \<model-name\>.objects.all()\
 Lookup: \<model-name\>.objects.filter(), \<model-name\>.objects.get()\
 RelatedManager useful for querying one-to-many or many-to-many relations: [Link](https://docs.djangoproject.com/en/3.1/ref/models/relations/)\
-Double underscores to follow relationships (see example at end of overview linked above)\
+Double underscores to follow relationships (see example at end of overview linked above)
 
 ## Give admin access to model objects
 1. In \<app-name\>/admin.py, import \<model-name\> from .models
