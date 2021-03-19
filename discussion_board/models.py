@@ -9,7 +9,7 @@ class User(models.Model):
         (Student, 'Student')
     )
 
-    type_id = models.TextField(choices=ROLE_CHOICES)
+    type = models.TextField(choices=ROLE_CHOICES)
     username = models.CharField(max_length=255, default='foo', unique=True)
     password = models.CharField(max_length=255, default='foo')
     email = models.EmailField(max_length=254)
@@ -24,7 +24,7 @@ class Post(models.Model):
     title = models.CharField(max_length=128)
     details = models.CharField(max_length=8192)
     create_date = models.DateTimeField(auto_now_add=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
 
     def __str__(self):
         return self.title
@@ -36,14 +36,14 @@ class Tags(models.Model):
         return self.title
 
 class Post_Tags(models.Model):
-    post_id = models.ForeignKey(Post, on_delete=models.CASCADE, default=None)
-    tag_id = models.ForeignKey(Tags, on_delete=models.CASCADE,default=None)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, default=None)
+    tag = models.ForeignKey(Tags, on_delete=models.CASCADE,default=None)
 
 class Reply(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, default=None)
     details = models.CharField(max_length=1024)
     create_date = models.DateTimeField(auto_now_add=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     # What's a good __str__ function for Reply?
     def __str__(self):
@@ -52,14 +52,14 @@ class Reply(models.Model):
 class Meeting(models.Model):
     link = models.URLField(max_length=250)
     date_time = models.DateTimeField()
-    post_id = models.ForeignKey(Post, on_delete=models.CASCADE, default=None)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, default=None)
 
     def __str__(self):
         return str(self.meeting_id)
 
 class MeetingUsers(models.Model):
-    meeting_id = models.ForeignKey(Meeting, on_delete=models.CASCADE, default=None)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE, default=None)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
 
 class Activity(models.Model):
     Prompt = 'Prompt'
