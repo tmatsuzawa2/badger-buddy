@@ -9,7 +9,7 @@ class User(models.Model):
         (Student, 'Student')
     )
 
-    type = models.TextField(choices=ROLE_CHOICES)
+    user_type = models.TextField(choices=ROLE_CHOICES)
     username = models.CharField(max_length=255, default='foo', unique=True)
     password = models.CharField(max_length=255, default='foo')
     email = models.EmailField(max_length=254)
@@ -55,7 +55,7 @@ class Meeting(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, default=None)
 
     def __str__(self):
-        return str(self.meeting_id)
+        return str(self.id)
 
 class MeetingUsers(models.Model):
     meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE, default=None)
