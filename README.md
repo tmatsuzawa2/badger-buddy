@@ -40,5 +40,14 @@ Double underscores to follow relationships (see example at end of overview linke
 1. In \<app-name\>/admin.py, import \<model-name\> from .models
 2. In \<app-name\>/admin.py, register the model: admin.site.register(\<model-name\>)
 
+## Add Bootstrap reference for any html template
+Insert <code> {% include "style/bootstrap.html" %}  </code>  at the top <br>
+Usage guide: https://getbootstrap.com/docs/4.3/components/
 
+## Common templates such as headers and footers
+Use block-content and endblock. 
+More details: https://docs.djangoproject.com/en/3.1/ref/templates/language/#id1
 
+## Linking js or css files
+Consider these as static files: https://docs.djangoproject.com/en/3.1/howto/static-files/ <br>
+Linking jsx or react files: transfer to js file first: https://reactjs.org/blog/2013/08/19/use-react-and-jsx-in-python-applications.html
