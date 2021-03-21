@@ -1,3 +1,5 @@
+{% include "style/bootstrap.html" %}  
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -15,4 +17,6 @@
     <p>No posts available.</p>
     {% endif %}
   </body>
+  {% block content %}
+  {% endblock %}
 </html>

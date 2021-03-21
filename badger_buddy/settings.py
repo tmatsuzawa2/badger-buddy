@@ -100,6 +100,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+PIPELINE_COMPILERS = (
+  'react.utils.pipeline.JSXCompiler',
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
