@@ -7,4 +7,4 @@ def index(request):
     context = {
         'posts': Post.objects.all()
     }
-    return render(request, 'users/index.html', context)
+    return render(request, 'users/login.html', context)

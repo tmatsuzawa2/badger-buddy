@@ -18,6 +18,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path('board/', include('discussion_board.discussion_board.urls')),
-    path('users/', include('discussion_board.users.urls')),
+    path('users/', include('django_registration.backends.one_step.urls')),
+    path('users/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
 ]
