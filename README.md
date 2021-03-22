@@ -4,6 +4,9 @@
 Install Django: [Link](https://docs.djangoproject.com/en/3.1/intro/install/)\
 This project was developed with Django 3.1. 
 
+**<code> pip install django-registration </code> for registration pages to work**
+
+
 # Admin user
 ### Username: admin
 ### Password: password
