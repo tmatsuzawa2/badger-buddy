@@ -7,17 +7,21 @@
     <title>Discussion Board</title>
   </head>
   <body>
-    {% if posts %}
-    <ul>
-      {% for post in posts %}
-      <li>{{ post.user.username }} {{ post.title }} {{ post.create_date }} {{post.details}}</li>
-      {% endfor %}
-    </ul>
-    {% else %}
-    <p>No posts available.</p>
-    {% endif %}
-    <a href="/board/create-post" class="btn btn-primary">
-      Create post
+    {% if user.is_authenticated %}
+      {% if posts %}
+      <ul>
+        {% for post in posts %}
+        <li>{{ post.user.username }} {{ post.title }} {{ post.create_date }} {{post.details}}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>No posts available.</p>
+      {% endif %}
+      <a href="/board/create-post" class="btn btn-primary">
+        Create post
       </a>
+    {% else %}
+    <p>You haven't login yet. Please login first. <a href="{% url 'login' %}">Login here</a></p>
+    {% endif %}
   </body>
 </html>

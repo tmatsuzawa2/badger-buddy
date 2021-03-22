@@ -1,0 +1,9 @@
+{% include "style/bootstrap.html" %}  
+
+<h4>Welcome: {{ user.username }} Register Successful! </h4> 
+<p><a href="/board"> Click here to redirect to the main page</a></p>
+<ul>
+  <li>Email : {{ user.email }}</li>
+  <li>Anonymity : {{ user.profile.anonymous }}</li>
+  <li>Role: {{ user.profile.user_type }}</li>
+</ul>

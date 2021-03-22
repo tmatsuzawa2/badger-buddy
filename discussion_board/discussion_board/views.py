@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from ..models import Post, User
+from ..models import Post
 from .forms import CreatePostForm
 
 # Create your views here.
@@ -17,7 +17,7 @@ def create_post(request):
         if form.is_valid():
             title = form.cleaned_data['title']
             details = form.cleaned_data['details']
-            p = Post(title=title, details=details, user=User.objects.get(pk=1))
+            p = Post(title=title, details=details, user=request.user)
             p.save()
             return HttpResponseRedirect('/board')
 

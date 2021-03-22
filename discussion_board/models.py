@@ -14,7 +14,7 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     user_type = models.TextField(choices=ROLE_CHOICES, default=Student)
-    wisc_email = models.EmailField(max_length=254, unique=True)
+    #wisc_email = models.EmailField(max_length=254, unique=True)
     anonymous = models.BooleanField(default=True)
 
 @receiver(post_save, sender=User)
