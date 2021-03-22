@@ -1,7 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+# Make user email field unique
+User._meta.get_field('email')._unique = True
 
 # Create your models here.
-class User(models.Model):
+class Profile(models.Model):
     Overseer = 'Overseer'
     Student = 'Student'
     ROLE_CHOICES = (
@@ -9,16 +15,18 @@ class User(models.Model):
         (Student, 'Student')
     )
 
-    user_type = models.TextField(choices=ROLE_CHOICES)
-    username = models.CharField(max_length=255, default='foo', unique=True)
-    password = models.CharField(max_length=255, default='foo')
-    email = models.EmailField(max_length=254)
-    anonymous = models.BooleanField()
-    first_name = models.CharField(max_length=128)
-    last_name = models.CharField(max_length=128)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user_type = models.TextField(choices=ROLE_CHOICES, default=Student)
+    anonymous = models.BooleanField(default=True)
 
-    def __str__(self):
-        return self.username
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
 
 class Post(models.Model):
     title = models.CharField(max_length=128)

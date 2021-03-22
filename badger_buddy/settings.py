@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Login redirection
+LOGIN_REDIRECT_URL = '/board'
+REGISTRATION_OPEN = True
 
 # Application definition
 
