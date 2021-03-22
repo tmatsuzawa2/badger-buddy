@@ -3,13 +3,14 @@ from django.test import TestCase
 # Create your tests here.
 from django.test import TestCase
 import datetime
+from .discussion_board.forms import CreatePostForm
 from .models import User, Post, Tags, Post_Tags, Reply, Meeting, MeetingUsers, Activity
 
-class AnimalTestCase(TestCase):
+class ModelTests(TestCase):
     def setUp(self):
-        User.objects.create(type="Student", username="jthal", password="pass123", email="jthalacker7@gmail.com",
+        User.objects.create(user_type="Student", username="jthal", password="pass123", email="jthalacker7@gmail.com",
                             anonymous=True, first_name="jake", last_name="thalacker")
-        User.objects.create(type="Overseer", username="jthal7", password="pass1234", email="jakethalacker7@gmail.com",
+        User.objects.create(user_type="Overseer", username="jthal7", password="pass1234", email="jakethalacker7@gmail.com",
                             anonymous=True, first_name="jake", last_name="thalacker")
         Post.objects.create(title="Mental Help",
                             details= "I am wondering if anyone else is lonely right now",
@@ -74,6 +75,35 @@ class AnimalTestCase(TestCase):
             test_user = User.objects.get(username=user.user.username)
             self.assertEqual(user.user.username, test_user.username)
 
+
+class PostTests(TestCase):
+    def setup(self):
+        User.objects.create(user_type="Student", username="jthal", password="pass123", email="jthalacker7@gmail.com",
+                            anonymous=True, first_name="jake", last_name="thalacker")
+        User.objects.create(user_type="Overseer", username="jthal7", password="pass1234",
+                            email="jakethalacker7@gmail.com",
+                            anonymous=True, first_name="jake", last_name="thalacker")
+        Post.objects.create(title="Mental Help 2",
+                            details="I recieved help from jthals post",
+                            create_date=datetime.datetime.now(),
+                            user=User.objects.get(username="jthal7"))
+
+
+    def test_form_valid(self):
+        form_data = {'title': 'Lonely', 'details': 'I am lonely'}
+        form = CreatePostForm(data=form_data)
+        self.assertTrue(form.is_valid())
+
+    def test_form_not_empty(self):
+        response = self.client.post("/board/create-post", {'title': 'something'})
+        self.assertFormError(response, 'form', 'details', 'This field is required.')
+
+    def test_form_created(self):
+        user= User.objects.get(pk=1)
+        response = self.client.post("/board/create-post", {'title': 'something', 'details': 'something 2'})
+        print("POST LIST", Post.objects.all())
+        post = Post.objects.get(title='something')
+        self.assertEqual(post.details, 'something 2')
 
 
 
