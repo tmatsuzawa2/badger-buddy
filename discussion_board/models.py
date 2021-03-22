@@ -17,12 +17,7 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     user_type = models.TextField(choices=ROLE_CHOICES, default=Student)
-    #wisc_email = models.EmailField(max_length=254, unique=True)
     anonymous = models.BooleanField(default=True)
-    #username = models.CharField(max_length=255, default='foo', unique=True)
-    #password = models.CharField(max_length=255, default='foo')
-    #first_name = models.CharField(max_length=128)
-    #last_name = models.CharField(max_length=128)
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
