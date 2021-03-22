@@ -12,7 +12,7 @@ class User(models.Model):
     user_type = models.TextField(choices=ROLE_CHOICES)
     username = models.CharField(max_length=255, default='foo', unique=True)
     password = models.CharField(max_length=255, default='foo')
-    email = models.EmailField(max_length=254)
+    email = models.EmailField(max_length=254, unique=True)
     anonymous = models.BooleanField()
     first_name = models.CharField(max_length=128)
     last_name = models.CharField(max_length=128)
