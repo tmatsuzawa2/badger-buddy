@@ -1,4 +1,7 @@
-{% include "style/bootstrap.html" %}  
+{% include "style/bootstrap.html" %}
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 
 <!DOCTYPE html>
 <html>
@@ -7,18 +10,48 @@
     <title>Discussion Board</title>
   </head>
   <body>
-    {% if posts %}
-    <ul>
-      {% for post in posts %}
-      <li>{{ post.user.username }} {{ post.title }} {{ post.create_date }} {{post.details}}</li>
-      {% endfor %}
-    </ul>
-    {% else %}
-    <p>No posts available.</p>
-    {% endif %}
-    <a href="/board/create-post" class="btn btn-primary">
-      Create post
-      </a>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="left-content">
+          {% if posts %}
+            {% for post in posts %}
+          <div class="container">
+            <div class="post" onclick="location.href='create-post';"> <! this should eventually link to the post's page to view replies>
+            <span class="titles"> <b> <a href="" id="post-link">{{ post.title }} </a></b> </span> <! this should eventually link to the post's page to view replies>
+            <div class="container">
+              <span class="details">{{post.details}}</span>
+            </div>
+            <div class="container">
+              <div class="row">
+                <span class="other"><div class="col-1">{{ post.user.username }}</div></span>
+                <span class="other"><div class="col">{{ post.create_date }}</div></span>
+              </div>
+              <div class="row">
+                <div class="col">
+                <a href="" class="btn btn-primary" id="reply-button">
+                  Reply
+                </a>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+            {% endfor %}
+          {% else %}
+          <p>No posts available.</p>
+          {% endif %}
+        </div>
+        </div>
+        <div class="col">
+          <div class="right-content">
+            <a href="/board/create-post" class="btn btn-primary" id="create-button">
+              Create post
+              </a>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
   {% block content %}
   {% endblock %}
