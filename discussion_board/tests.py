@@ -4,7 +4,9 @@ from django.test import TestCase
 from django.test import TestCase
 import datetime
 from .discussion_board.forms import CreatePostForm
-from .models import User, Post, Tags, Post_Tags, Reply, Meeting, MeetingUsers, Activity
+from .models import User as User
+from .models import Post, Tags, Post_Tags, Reply, Meeting, MeetingUsers, Activity
+from django.contrib.auth.models import User as Users
 
 class ModelTests(TestCase):
     def setUp(self):
@@ -77,7 +79,7 @@ class ModelTests(TestCase):
 
 
 class PostTests(TestCase):
-    def setup(self):
+    def setUp(self):
         User.objects.create(user_type="Student", username="jthal", password="pass123", email="jthalacker7@gmail.com",
                             anonymous=True, first_name="jake", last_name="thalacker")
         User.objects.create(user_type="Overseer", username="jthal7", password="pass1234",
@@ -87,6 +89,9 @@ class PostTests(TestCase):
                             details="I recieved help from jthals post",
                             create_date=datetime.datetime.now(),
                             user=User.objects.get(username="jthal7"))
+
+        self.user = Users.objects.create_superuser(username="testUser", password="TestUserPass",
+                                                   email="testUser@example.com")
 
 
     def test_form_valid(self):
@@ -98,13 +103,18 @@ class PostTests(TestCase):
         response = self.client.post("/board/create-post", {'title': 'something'})
         self.assertFormError(response, 'form', 'details', 'This field is required.')
 
-    def test_form_created(self):
-        user= User.objects.get(pk=1)
+    def test_post_created(self):
         response = self.client.post("/board/create-post", {'title': 'something', 'details': 'something 2'})
         print("POST LIST", Post.objects.all())
         post = Post.objects.get(title='something')
         self.assertEqual(post.details, 'something 2')
 
+    def test_post_user(self):
+        self.client.force_login(self.user)
+        response = self.client.post("/board/create-post", {'title': 'something', 'details': 'something 2'})
+        print("POST LIST", Post.objects.all())
+        post = Post.objects.get(title='something')
+        self.assertEqual(post.user, self.user)
 
 
 
