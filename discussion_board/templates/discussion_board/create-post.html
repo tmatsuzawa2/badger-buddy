@@ -1,17 +1,43 @@
+{% extends "../layout/base.html" %}
+{% include "style/bootstrap.html" %}
+{% load static %}
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
 <!DOCTYPE html>
 <html lang="en">
+{% block content %}
 <head>
     <meta charset="UTF-8">
     <title>Create Post</title>
 </head>
 <body>
-    <p>
-        Please create your post!
-    </p>
-    <form action="/board/create-post" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Submit">
+    {% csrf_token %}
+    {{ form }}
+    <form action="/board/create-post" method="post" style="width:50%; margin-left:100px;">
+      <div class="form-group">
+        <label>Post Title</label>
+        <input type="text" class="form-control"  placeholder="Enter title">
+      </div>
+      <div class="form-group">
+        <label>Details</label>
+        <input type="text" class="form-control" placeholder="Details">
+      </div>
+        <div class="form-group">
+        <label>Post Tags</label>
+        <select multiple class="form-control">
+          <option>Anxiety</option>
+          <option>Stress</option>
+          <option>School</option>
+        </select>
+      </div>
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input">
+        <label class="form-check-label">Anonymous</label>
+      </div>
+      <button type="submit" class="btn btn-primary" style="background-color:#FBC95B; border: 0px">Create Post</button>
     </form>
 </body>
+{% endblock %}
 </html>
