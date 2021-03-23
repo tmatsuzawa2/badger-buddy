@@ -5,18 +5,24 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 
-
+<!DOCTYPE html>
+<html lang="en">
 {% block content %}
-
-    <form action="/board/create-post" method="post" style="width:50%; margin-left:100px;" role="form">
-      {% csrf_token %}
+<head>
+    <meta charset="UTF-8">
+    <title>Create Post</title>
+</head>
+<body>
+    {% csrf_token %}
+    {{ form }}
+    <form action="/board/create-post" method="post" style="width:50%; margin-left:100px;">
       <div class="form-group">
-        <label for="post_title">{{form.title.label_tag}}</label>
-        <input type="text" name="title" class="form-control" maxlength="128" required id="post_title" >
+        <label>Post Title</label>
+        <input type="text" class="form-control"  placeholder="Enter title">
       </div>
       <div class="form-group">
-        <label for="details">{{form.details.label_tag}}</label>
-        <input type="text" name = "details" class="form-control" maxlength="8192" required id="details" >
+        <label>Details</label>
+        <input type="text" class="form-control" placeholder="Details">
       </div>
         <div class="form-group">
         <label>Post Tags</label>
@@ -30,7 +36,8 @@
         <input type="checkbox" class="form-check-input">
         <label class="form-check-label">Anonymous</label>
       </div>
-      <input type="submit" class="btn btn-primary" style="background-color:#FBC95B; border: 0px" value="Create Post">
+      <button type="submit" class="btn btn-primary" style="background-color:#FBC95B; border: 0px">Create Post</button>
     </form>
-
+</body>
 {% endblock %}
+</html>

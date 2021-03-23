@@ -1,61 +1,44 @@
 a {
-  color: black;
   font-size: 20px;
-  font-family: Arial;
   text-decoration: none;
 }
+
 
 a:hover {
   color: black;
   text-decoration: underline;
 }
 
-.titles {
-    font-size: 20px;
+#logo {
+    border: 0px solid white;
+    border-radius: 3px;
 }
 
-.details {
-    font-size: 18px;
+#searchbtn {
+    color:white;
+    border: 1px solid white;
 }
 
-.other {
+#link-item {
+    color: white;
+    padding:5px;
+    margin: 10px;
+    border: 0px solid white;
+    border-radius: 5px;
+}
+#link-item:hover {
+    color: black;
+}
+
+footer {
+    color: white;
     font-size: 12px;
-    align: right;
 }
 
-.right-content {
-    float: right;
-    margin: 10px;
-}
-.left-content {
-    margin: 10px;
+body, header, footer {
+    font-family: Lucida Bright;
 }
 
-.post {
-    background-color:#68C8B5;
-    margin-top:20px;
-    padding:10px;
-    border-radius: 10px;
-    border: 2px solid #a9a9a9;
+body {
+    padding-top: 100px;
 }
-
-.container {
-    margin-left: 0px;
-}
-
-#create-button {
-    background-color:#68C8B5;
-    border-radius: 10px;
-    border: 2px solid gray;
-    color: black;
-    margin: 100px;
-}
-#reply-button {
-    background-color:#68C8B5;
-    border-radius: 10px;
-    border: 2px solid gray;
-    color: black;
-    float:right;
-    margin: 5px;
-}
-
