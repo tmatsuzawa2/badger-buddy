@@ -1,5 +1,7 @@
+{% extends "../layout/base.html" %}
 {% include "style/bootstrap.html" %}
 {% load static %}
+
 
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 
@@ -31,7 +33,7 @@
               <div class="row">
                 <div class="col">
                 <a href="" class="btn btn-primary" id="reply-button">
-                  Reply
+                  Reply!!
                 </a>
                 </div>
               </div>
@@ -51,6 +53,9 @@
               </a>
           </div>
         </div>
+        {% else %}
+        <p style="color: black; width:50%; margin-left:50px; font-size: 16px;">You haven't login yet. Please login first.</p> <br><a href="{% url 'login' %}" style="color: black; width:50%; margin-left:50px; font-size: 16px;">Login here</a>
+        {% endif %}
       </div>
     </div>
   </body>
