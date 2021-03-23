@@ -1,4 +1,6 @@
 {% include "style/bootstrap.html" %}  
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 
 <!DOCTYPE html>
 <html>
@@ -8,18 +10,33 @@
   </head>
   <body>
     {% if user.is_authenticated %}
-      {% if posts %}
-      <ul>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          {% if posts %}
         {% for post in posts %}
-        <li>{{ post.user.username }} {{ post.title }} {{ post.create_date }} {{post.details}}</li>
+        <div class="list-group" id="post">
+          <a href="/board" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ post.title }}</h5>
+              <small> {{ post.create_date }} </small>
+            </div>
+            <p class="mb-1"> {{ post.details }} </p>
+            <small> Posted By: {{ post.user.username }} </small>
+          </a>
+        </div>
         {% endfor %}
-      </ul>
       {% else %}
       <p>No posts available.</p>
       {% endif %}
-      <a href="/board/create-post" class="btn btn-primary">
-        Create post
-      </a>
+        </div>
+        <div class="col">
+          <a href="/board/create-post" class="btn btn-primary btn-block" id="create-button">
+            Create post
+          </a>
+        </div>
+      </div>
+    </div>
     {% else %}
     <p>You haven't login yet. Please login first. <a href="{% url 'login' %}">Login here</a></p>
     {% endif %}
