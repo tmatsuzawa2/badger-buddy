@@ -12,6 +12,7 @@
   <body>
     <div class="container">
       <div class="row">
+        {% if user.is_authenticated %}
         <div class="col">
           <div class="left-content">
           {% if posts %}
@@ -42,6 +43,7 @@
           <p>No posts available.</p>
           {% endif %}
         </div>
+
         </div>
         <div class="col">
           <div class="right-content">
@@ -50,9 +52,10 @@
               </a>
           </div>
         </div>
+        {% else %}
+        <p>You haven't login yet. Please login first. <a href="{% url 'login' %}">Login here</a></p>
+        {% endif %}
       </div>
     </div>
   </body>
-  {% block content %}
-  {% endblock %}
 </html>
