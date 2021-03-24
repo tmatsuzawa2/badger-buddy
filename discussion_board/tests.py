@@ -106,6 +106,7 @@ class PostTests(TestCase):
 
     def test_post_created(self):
         response = self.client.post("/board/create-post", {'title': 'something', 'details': 'something 2'})
+        print("Response_creation", response.context)
         post = Post.objects.get(title='something')
         self.assertEqual(post.details, 'something 2')
 
@@ -126,11 +127,16 @@ class PostTests(TestCase):
 
 class AccountTest(TestCase):
     def setUp(self):
-        User.objects.create(username="jthal", password="pass123", email="jthalacker7@gmail.com",
+        user = User.objects.create(username="jthal", email="jthalacker7@gmail.com",
                             first_name="jake", last_name="thalacker")
-        User.objects.create(username="jthal7", password="badgerBuddy",
+        user2 = User.objects.create(username="jthal7",
                             email="jakethalacker7@gmail.com",
                             first_name="jake", last_name="thalacker")
+
+        user.set_password('badgerbuddy123')
+        user2.set_password('badgerBuddy')
+        user.save()
+        user2.save()
 
     def test_change_anonyminity(self):
         prof = Profile.objects.get(user=User.objects.get(username="jthal"))
@@ -138,20 +144,16 @@ class AccountTest(TestCase):
         self.assertEqual(prof.anonymous, user.profile.anonymous)
 
     def test_register_login(self):
-        response = self.client.post("/users/register", {'username': 'jthal007', 'password1': 'badgerBuddy',
-                                                        'password2': 'badgerBuddy', 'email': 'fake@wisc.edu'})
-        print("Response1", response)
-        response = self.client.post("/users/login",
-                                    {'username': 'jthal007', 'password': 'badgerBuddy'})
-        print("response2", response)
+        response = self.client.post("/users/register/", {'username': 'jthal007', 'password1': 'badgerBuddy123',
+                                                        'password2': 'badgerBuddy123', 'email': 'fake@wisc.edu'})
+        print('RESPONSE:', response.context)
         user = auth.get_user(self.client)
         assert user.is_authenticated
 
     def test_login(self):
         # send login data
         response = self.client.post('/users/login/', {'username': 'jthal7', 'password': 'badgerBuddy'}, follow=True)
-        print("RESPONSE", response.context['user'])
         # should be logged in now
         user = auth.get_user(self.client)
-        print("USER:", user)
         assert user.is_authenticated
+
