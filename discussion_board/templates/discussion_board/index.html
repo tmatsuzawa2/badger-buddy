@@ -25,9 +25,25 @@
               <h5 class="mb-1">{{ post.title }}</h5>
               <small> {{ post.create_date }} </small>
             </div>
-            <p class="mb-1"> {{ post.details }} </p>
-            <small> Posted By: {{ post.user.username }} </small>
-          </a>
+            <div class="container">
+              <div class="row">
+                <span class="other"><div class="col-1">{{ post.user.username }}</div></span>
+                <span class="other"><div class="col">{{ post.create_date }}</div></span>
+              </div>
+              <div class="row">
+                <div class="col">
+                <a href="/board/create-reply" class="btn btn-primary" id="reply-button">
+                  Reply!!
+                </a>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+            {% endfor %}
+          {% else %}
+          <p>No posts available.</p>
+          {% endif %}
         </div>
         {% endfor %}
       {% else %}
