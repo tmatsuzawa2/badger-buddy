@@ -33,6 +33,7 @@ a:hover {
 footer {
     color: white;
     font-size: 12px;
+    margin-top: 20px;
 }
 
 body, header, footer {
@@ -41,4 +42,20 @@ body, header, footer {
 
 body {
     padding-top: 100px;
+}
+
+#post {
+    background-color:#68C8B5;
+    margin-top:20px;
+    padding:10px;
+    border-radius: 10px;
+}
+
+#create-button {
+    position: relative;
+    background-color:#68C8B5;
+    border-radius: 10px;
+    /* border: 2px solid gray; */
+    /* color: black; */
+    margin: 100px;
 }

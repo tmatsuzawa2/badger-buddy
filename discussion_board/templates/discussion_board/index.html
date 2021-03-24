@@ -13,52 +13,38 @@
     <title>Discussion Board</title>
   </head>
   <body>
+    {% if user.is_authenticated %}
     <div class="container">
       <div class="row">
-        {% if user.is_authenticated %}
         <div class="col">
-          <div class="left-content">
           {% if posts %}
-            {% for post in posts %}
-          <div class="container">
-            <div class="post" onclick="location.href='create-post';"> <! this should eventually link to the post's page to view replies>
-            <span class="titles"> <b> <a href="" id="post-link">{{ post.title }} </a></b> </span> <! this should eventually link to the post's page to view replies>
-            <div class="container">
-              <span class="details">{{post.details}}</span>
+        {% for post in posts %}
+        <div class="list-group" id="post">
+          <a href="/board" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ post.title }}</h5>
+              <small> {{ post.create_date }} </small>
             </div>
-            <div class="container">
-              <div class="row">
-                <span class="other"><div class="col-1">{{ post.user.username }}</div></span>
-                <span class="other"><div class="col">{{ post.create_date }}</div></span>
-              </div>
-              <div class="row">
-                <div class="col">
-                <a href="/board/create-reply" class="btn btn-primary" id="reply-button">
-                  Reply!!
-                </a>
-                </div>
-              </div>
-            </div>
-            </div>
-          </div>
-            {% endfor %}
-          {% else %}
-          <p>No posts available.</p>
-          {% endif %}
+            <p class="mb-1"> {{ post.details }} </p>
+            <small> Posted By: {{ post.user.username }} </small>
+          </a>
         </div>
+        {% endfor %}
+      {% else %}
+      <p>No posts available.</p>
+      {% endif %}
         </div>
         <div class="col">
-          <div class="right-content">
-            <a href="/board/create-post" class="btn btn-primary" id="create-button">
-              Create post
-              </a>
-          </div>
+          <a href="/board/create-post" class="btn btn-primary btn-block" id="create-button">
+            Create post
+          </a>
         </div>
-        {% else %}
-        <p style="color: black; width:50%; margin-left:50px; font-size: 16px;">You haven't login yet. Please login first.</p> <br><a href="{% url 'login' %}" style="color: black; width:50%; margin-left:50px; font-size: 16px;">Login here</a>
-        {% endif %}
       </div>
     </div>
+    {% else %}
+    <p style="color: black; width:50%; margin-left:50px; font-size: 16px;">You haven't login yet. Please login first. <br>
+      <a href="{% url 'login' %}" class="btn btn-primary btn-block" style="background-color:#FBC95B; border: 0px; width:150px;">Login here</a></p>
+    {% endif %}
   </body>
   {% endblock %}
 </html>
