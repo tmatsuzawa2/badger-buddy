@@ -42,7 +42,8 @@
       </div>
     </div>
     {% else %}
-    <p>You haven't login yet. Please login first. <a href="{% url 'login' %}">Login here</a></p>
+    <p style="color: black; width:50%; margin-left:50px; font-size: 16px;">You haven't login yet. Please login first. <br>
+      <a href="{% url 'login' %}" class="btn btn-primary btn-block" style="background-color:#FBC95B; border: 0px; width:150px;">Login here</a></p>
     {% endif %}
   </body>
   {% endblock %}
