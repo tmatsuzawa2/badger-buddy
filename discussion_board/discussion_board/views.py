@@ -30,3 +30,10 @@ def create_post(request):
 
     return render(request, 'discussion_board/create-post.html', context)
 
+def create_reply(request):
+    context = {
+
+    }
+
+    return render(request, 'discussion_board/create-reply.html', context)
+
