@@ -156,3 +156,13 @@ class AccountTest(TestCase):
         user = auth.get_user(self.client)
         assert user.is_authenticated
 
+    def test_logout(self):
+        # send login data
+        response = self.client.post('/users/login/', {'username': 'jthal7', 'password': 'badgerBuddy'}, follow=True)
+        # should be logged in now
+        user = auth.get_user(self.client)
+        response = self.client.post('/users/logout/',)
+        # should be logged out now
+        user = auth.get_user(self.client)
+        assert not user.is_authenticated
+
