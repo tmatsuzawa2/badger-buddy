@@ -53,9 +53,12 @@ class Reply(models.Model):
     create_date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    class Meta:
+        ordering = ['create_date']
+        
     # What's a good __str__ function for Reply?
     def __str__(self):
-        return self.details
+        return 'Comment {} by {} at {}'.format(self.details, self.user.username, self.create_date)
 
 class Meeting(models.Model):
     link = models.URLField(max_length=250)
