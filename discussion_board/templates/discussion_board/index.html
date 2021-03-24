@@ -15,6 +15,7 @@
   <body>
     <div class="container">
       <div class="row">
+        {% if user.is_authenticated %}
         <div class="col">
           <div class="left-content">
           {% if posts %}
