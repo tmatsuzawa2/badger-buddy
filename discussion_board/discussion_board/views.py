@@ -1,13 +1,16 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from ..models import Post
-from .forms import CreatePostForm
+from django.shortcuts import render, get_object_or_404
+from ..models import Post, Reply
+from .forms import CreatePostForm, CreateReplyForm
 
 # Create your views here.
 
 def index(request):
+    posts = Post.objects.all()
+    replies = Reply.objects.all()
     context = {
-        'posts': Post.objects.all()
+        'posts': posts,
+        'replies': replies
     }
     return render(request, 'discussion_board/index.html', context)
 
@@ -18,6 +21,7 @@ def create_post(request):
             title = form.cleaned_data['title']
             details = form.cleaned_data['details']
             p = Post(title=title, details=details, user=request.user)
+            # if want anonmyity, request.user.profile.anonymous
             p.save()
             return HttpResponseRedirect('/board')
 
@@ -30,9 +34,21 @@ def create_post(request):
 
     return render(request, 'discussion_board/create-post.html', context)
 
-def create_reply(request):
-    context = {
+def create_reply(request, post_id):
+    if request.method == 'POST':
+        form = CreateReplyForm(request.POST)
+        if form.is_valid():
+            post = get_object_or_404(Post, pk=post_id)
+            details = form.cleaned_data['details']
+            r = Reply(post=post, details=details, user=request.user)
+            r.save()
+            return HttpResponseRedirect('/board')
 
+    else:
+        form = CreateReplyForm()
+
+    context = {
+        'form': form
     }
 
     return render(request, 'discussion_board/create-reply.html', context)
