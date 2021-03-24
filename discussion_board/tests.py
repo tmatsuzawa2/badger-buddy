@@ -106,7 +106,7 @@ class PostTests(TestCase):
 
     def test_post_created(self):
         response = self.client.post("/board/create-post", {'title': 'something', 'details': 'something 2'})
-        print("Response_creation", response.context)
+
         post = Post.objects.get(title='something')
         self.assertEqual(post.details, 'something 2')
 
@@ -146,7 +146,6 @@ class AccountTest(TestCase):
     def test_register_login(self):
         response = self.client.post("/users/register/", {'username': 'jthal007', 'password1': 'badgerBuddy123',
                                                         'password2': 'badgerBuddy123', 'email': 'fake@wisc.edu'})
-        print('RESPONSE:', response.context)
         user = auth.get_user(self.client)
         assert user.is_authenticated
 
