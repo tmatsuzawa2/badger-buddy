@@ -13,9 +13,9 @@
     <title>Create Post</title>
 </head>
 <body>
-    {% csrf_token %}
-    {{ form }}
     <form action="/board/create-post" method="post" style="width:50%; margin-left:100px;">
+        {% csrf_token %}
+        {{ form }}
       <div class="form-group">
         <label>Post Title</label>
         <input type="text" class="form-control"  placeholder="Enter title">
