@@ -36,7 +36,7 @@ def create_post(request):
 
 def create_reply(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    post_comment = Post.order_by("-create_date")
+    post_comment = Post.objects.order_by("create_date")
     if request.method == 'POST':
         form = CreateReplyForm(request.POST)
         if form.is_valid():

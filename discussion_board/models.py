@@ -57,7 +57,7 @@ class Reply(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ['-create_date']
+        ordering = ['create_date']
         
     # What's a good __str__ function for Reply?
     def __str__(self):
