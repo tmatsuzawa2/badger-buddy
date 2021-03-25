@@ -4,17 +4,21 @@ from django.test import TestCase
 from django.contrib import auth
 from django.test import TestCase
 import datetime
-from .discussion_board.forms import CreatePostForm
+from .discussion_board.forms import CreatePostForm, CreateReplyForm
 from .models import Post, Tags, Post_Tags, Reply, Meeting, MeetingUsers, Activity, Profile
 from django.contrib.auth.models import User as User
 
+
 class ModelTests(TestCase):
     def setUp(self):
-        User.objects.create(username="jthal", password="pass123", email="jthalacker7@gmail.com",
-                            first_name="jake", last_name="thalacker")
-        User.objects.create(username="jthal7", password="pass1234",
-                            email="jakethalacker7@gmail.com",
-                            first_name="jake", last_name="thalacker")
+        user = User.objects.create(username="jthal", email="jthalacker7@gmail.com",
+                                   first_name="jake", last_name="thalacker")
+        user2 = User.objects.create(username="jthal7",
+                                    email="jakethalacker7@gmail.com",
+                                    first_name="jake", last_name="thalacker")
+
+        user.set_password('badgerbuddy123')
+        user2.set_password('badgerBuddy')
         Post.objects.create(title="Mental Help",
                             details= "I am wondering if anyone else is lonely right now",
                             create_date=datetime.datetime.now(),
@@ -81,18 +85,21 @@ class ModelTests(TestCase):
 
 class PostTests(TestCase):
     def setUp(self):
-        User.objects.create(username="jthal", password="pass123", email="jthalacker7@gmail.com",
-                            first_name="jake", last_name="thalacker")
-        User.objects.create(username="jthal7", password="pass1234",
-                            email="jakethalacker7@gmail.com",
-                            first_name="jake", last_name="thalacker")
+        user = User.objects.create(username="jthal", email="jthalacker7@gmail.com",
+                                   first_name="jake", last_name="thalacker")
+        user2 = User.objects.create(username="jthal7",
+                                    email="jakethalacker7@gmail.com",
+                                    first_name="jake", last_name="thalacker")
+
+        user.set_password('badgerbuddy123')
+        user2.set_password('badgerBuddy')
         Post.objects.create(title="Mental Help 2",
                             details="I recieved help from jthals post",
                             create_date=datetime.datetime.now(),
                             user=User.objects.get(username="jthal7"))
 
         self.user = User.objects.create_superuser(username="testUser", password="TestUserPass",
-                                                   email="testUser@example.com")
+                                                  email="testUser@example.com")
         self.client.force_login(self.user)
 
     def test_form_valid(self):
@@ -125,13 +132,61 @@ class PostTests(TestCase):
             pass
 
 
+class ReplyTests(TestCase):
+    def setUp(self):
+        user = User.objects.create(username="jthal", email="jthalacker7@gmail.com",
+                                   first_name="jake", last_name="thalacker")
+        user2 = User.objects.create(username="jthal7",
+                                    email="jakethalacker7@gmail.com",
+                                    first_name="jake", last_name="thalacker")
+
+        user.set_password('badgerbuddy123')
+        user2.set_password('badgerBuddy')
+        Post.objects.create(title="Mental Help 2",
+                            details="I recieved help from jthals post",
+                            create_date=datetime.datetime.now(),
+                            user=User.objects.get(username="jthal7"))
+
+        self.user = User.objects.get(username="jthal7")
+        self.client.force_login(self.user)
+
+    def test_reply_form_valid(self):
+        form_data = {'details': 'I am lonely'}
+        form = CreateReplyForm(data=form_data)
+        self.assertTrue(form.is_valid())
+
+    def test_reply_form_not_empty(self):
+        response = self.client.post("/board/create-reply/1", {'details': ''})
+        self.assertFormError(response, 'form', 'details', 'This field is required.')
+
+    def test_reply_created(self):
+        response = self.client.post("/board/create-reply/1", {'details': 'something'})
+
+        reply = Reply.objects.get(post=Post.objects.get(title='Mental Help 2'))
+        self.assertEqual(reply.details, 'something')
+
+    def test_reply_user(self):
+        response = self.client.post("/board/create-reply/1", {'details': 'something 2'})
+        reply = Reply.objects.get(post=Post.objects.get(title='Mental Help 2'), details='something 2')
+        self.assertEqual(reply.user, self.user)
+
+    def test_reply_not_logged_in(self):
+        self.client.logout()
+        try:
+            response = self.client.post("/board/create-reply/1", {'details': 'something 3'})
+            reply = Reply.objects.get(post=Post.objects.get(title='Mental Help 2'), details='something 3')
+            self.fail()
+        except ValueError:
+            pass
+
+
 class AccountTest(TestCase):
     def setUp(self):
         user = User.objects.create(username="jthal", email="jthalacker7@gmail.com",
-                            first_name="jake", last_name="thalacker")
+                                   first_name="jake", last_name="thalacker")
         user2 = User.objects.create(username="jthal7",
-                            email="jakethalacker7@gmail.com",
-                            first_name="jake", last_name="thalacker")
+                                    email="jakethalacker7@gmail.com",
+                                    first_name="jake", last_name="thalacker")
 
         user.set_password('badgerbuddy123')
         user2.set_password('badgerBuddy')
@@ -145,7 +200,7 @@ class AccountTest(TestCase):
 
     def test_register_login(self):
         response = self.client.post("/users/register/", {'username': 'jthal007', 'password1': 'badgerBuddy123',
-                                                        'password2': 'badgerBuddy123', 'email': 'fake@wisc.edu'})
+                                                         'password2': 'badgerBuddy123', 'email': 'fake@wisc.edu'})
         user = auth.get_user(self.client)
         assert user.is_authenticated
 
