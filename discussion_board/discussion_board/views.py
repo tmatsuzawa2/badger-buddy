@@ -14,7 +14,9 @@ def index(request):
     }
     return render(request, 'discussion_board/index.html', context)
 
-def create_post(request):
+def create_post(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    post = post.comments.filter(active=True).order_by("-create_date")
     if request.method == 'POST':
         form = CreatePostForm(request.POST)
         if form.is_valid():
@@ -29,16 +31,18 @@ def create_post(request):
         form = CreatePostForm()
 
     context = {
-        'form': form
+        'form': form,
+        'post': post
     }
 
     return render(request, 'discussion_board/create-post.html', context)
 
 def create_reply(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    post_comment = post.comments.filter(active=True).order_by("-create_date")
     if request.method == 'POST':
         form = CreateReplyForm(request.POST)
         if form.is_valid():
-            post = get_object_or_404(Post, pk=post_id)
             details = form.cleaned_data['details']
             r = Reply(post=post, details=details, user=request.user)
             r.save()
@@ -48,7 +52,8 @@ def create_reply(request, post_id):
         form = CreateReplyForm()
 
     context = {
-        'form': form
+        'form': form,
+        'post_comment': post_comment
     }
 
     return render(request, 'discussion_board/create-reply.html', context)
