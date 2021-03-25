@@ -14,9 +14,7 @@ def index(request):
     }
     return render(request, 'discussion_board/index.html', context)
 
-def create_post(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
-    post = Post.objects.order_by("create_date")
+def create_post(request):
     if request.method == 'POST':
         form = CreatePostForm(request.POST)
         if form.is_valid():
@@ -31,15 +29,14 @@ def create_post(request, post_id):
         form = CreatePostForm()
 
     context = {
-        'form': form,
-        'post': post
+        'form': form
     }
 
     return render(request, 'discussion_board/create-post.html', context)
 
 def create_reply(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    post_comment = Post.objects.order_by("create_date")
+    post_comment = Post.order_by("-create_date")
     if request.method == 'POST':
         form = CreateReplyForm(request.POST)
         if form.is_valid():
