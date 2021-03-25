@@ -31,6 +31,10 @@ ALLOWED_HOSTS = []
 LOGIN_REDIRECT_URL = '/board'
 REGISTRATION_OPEN = True
 
+# Send email to the backend for password reset
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = 'discussion_board/sent_emails'
+
 # Application definition
 
 INSTALLED_APPS = [

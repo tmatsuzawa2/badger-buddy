@@ -1,17 +1,14 @@
-from django import forms
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
+class EmailValidationOnForgotPassword(PasswordResetForm):
 
-class LoginForm(forms.Form):
-    username = forms.CharField(max_length=128)
-    password = forms.CharField(max_length=32)
-
-    def check_title_details(self):
-        title = self.cleaned_data['title']
-        details = self.cleaned_data['details']
-        if len(title) == 0 or len(details) == 0:
-            raise ValidationError('Invalid - title or details should not be empty')
-        else:
-            return title, details
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if not User.objects.filter(email__iexact=email, is_active=True).exists():
+            raise ValidationError("There is no user registered with the specified email address.")
+            
+        return email
 
 

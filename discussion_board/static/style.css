@@ -55,8 +55,10 @@ footer {
 }
 
 #create-button {
+    position: relative;
     background-color:#68C8B5;
     border-radius: 10px;
-    position: fixed;
-    margin: 300px;
+    /* border: 2px solid gray; */
+    /* color: black; */
+    margin: 100px;
 }
