@@ -3,8 +3,12 @@ from django.core.exceptions import ValidationError
 
 
 class CreatePostForm(forms.Form):
-    title = forms.CharField(max_length=128)
-    details = forms.CharField(max_length=8192)
+    title = forms.CharField(label='Post Title',
+                            max_length=128,
+                            widget=forms.TextInput(attrs={'class': 'form-control'}))
+    details = forms.CharField(label='Details',
+                            max_length=8192,
+                            widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     def check_title_details(self):
         title = self.cleaned_data['title']
@@ -13,5 +17,6 @@ class CreatePostForm(forms.Form):
             raise ValidationError('Invalid - title or details should not be empty')
         else:
             return title, details
+
 
 

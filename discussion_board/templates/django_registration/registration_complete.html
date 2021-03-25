@@ -1,9 +1,19 @@
-{% include "style/bootstrap.html" %}  
+{% extends "../layout/basic.html" %}
+{% include "style/bootstrap.html" %}
+{% load static %}
 
-<h4>Welcome: {{ user.username }} Register Successful! </h4> 
-<p><a href="/board"> Click here to redirect to the main page</a></p>
-<ul>
+
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+{% block content %}
+<h4 style="color: black; width:50%; margin-left:50px;">Welcome, {{ user.username }}! Registration Successful </h4>
+<a href="/board" class="btn btn-primary btn-block" style="margin-left:50px; background-color:#FBC95B; border: 0px; width:350px;">Click here to redirect to the main page</a></p>
+<br>
+<br>
+<p style="color: black; width:50%; margin-left:50px; font-size: 16px;">Account Details</p>
+<ul style="color: black; width:50%; margin-left:50px; font-size: 16px;">
   <li>Email : {{ user.email }}</li>
   <li>Anonymity : {{ user.profile.anonymous }}</li>
   <li>Role: {{ user.profile.user_type }}</li>
 </ul>
+{% endblock %}

@@ -1,19 +1,20 @@
 from django.test import TestCase
 
 # Create your tests here.
+from django.contrib import auth
 from django.test import TestCase
 import datetime
 from .discussion_board.forms import CreatePostForm
-from .models import User as User
-from .models import Post, Tags, Post_Tags, Reply, Meeting, MeetingUsers, Activity
-from django.contrib.auth.models import User as Users
+from .models import Post, Tags, Post_Tags, Reply, Meeting, MeetingUsers, Activity, Profile
+from django.contrib.auth.models import User as User
 
 class ModelTests(TestCase):
     def setUp(self):
-        User.objects.create(user_type="Student", username="jthal", password="pass123", email="jthalacker7@gmail.com",
-                            anonymous=True, first_name="jake", last_name="thalacker")
-        User.objects.create(user_type="Overseer", username="jthal7", password="pass1234", email="jakethalacker7@gmail.com",
-                            anonymous=True, first_name="jake", last_name="thalacker")
+        User.objects.create(username="jthal", password="pass123", email="jthalacker7@gmail.com",
+                            first_name="jake", last_name="thalacker")
+        User.objects.create(username="jthal7", password="pass1234",
+                            email="jakethalacker7@gmail.com",
+                            first_name="jake", last_name="thalacker")
         Post.objects.create(title="Mental Help",
                             details= "I am wondering if anyone else is lonely right now",
                             create_date=datetime.datetime.now(),
@@ -80,19 +81,19 @@ class ModelTests(TestCase):
 
 class PostTests(TestCase):
     def setUp(self):
-        User.objects.create(user_type="Student", username="jthal", password="pass123", email="jthalacker7@gmail.com",
-                            anonymous=True, first_name="jake", last_name="thalacker")
-        User.objects.create(user_type="Overseer", username="jthal7", password="pass1234",
+        User.objects.create(username="jthal", password="pass123", email="jthalacker7@gmail.com",
+                            first_name="jake", last_name="thalacker")
+        User.objects.create(username="jthal7", password="pass1234",
                             email="jakethalacker7@gmail.com",
-                            anonymous=True, first_name="jake", last_name="thalacker")
+                            first_name="jake", last_name="thalacker")
         Post.objects.create(title="Mental Help 2",
                             details="I recieved help from jthals post",
                             create_date=datetime.datetime.now(),
                             user=User.objects.get(username="jthal7"))
 
-        self.user = Users.objects.create_superuser(username="testUser", password="TestUserPass",
+        self.user = User.objects.create_superuser(username="testUser", password="TestUserPass",
                                                    email="testUser@example.com")
-
+        self.client.force_login(self.user)
 
     def test_form_valid(self):
         form_data = {'title': 'Lonely', 'details': 'I am lonely'}
@@ -105,16 +106,63 @@ class PostTests(TestCase):
 
     def test_post_created(self):
         response = self.client.post("/board/create-post", {'title': 'something', 'details': 'something 2'})
-        print("POST LIST", Post.objects.all())
+
         post = Post.objects.get(title='something')
         self.assertEqual(post.details, 'something 2')
 
     def test_post_user(self):
-        self.client.force_login(self.user)
         response = self.client.post("/board/create-post", {'title': 'something', 'details': 'something 2'})
-        print("POST LIST", Post.objects.all())
         post = Post.objects.get(title='something')
         self.assertEqual(post.user, self.user)
 
+    def test_not_logged_in(self):
+        self.client.logout()
+        try:
+            response = self.client.post("/board/create-post", {'title': 'something', 'details': 'something 2'})
+            post = Post.objects.get(title='something')
+            self.fail()
+        except ValueError:
+            pass
 
+
+class AccountTest(TestCase):
+    def setUp(self):
+        user = User.objects.create(username="jthal", email="jthalacker7@gmail.com",
+                            first_name="jake", last_name="thalacker")
+        user2 = User.objects.create(username="jthal7",
+                            email="jakethalacker7@gmail.com",
+                            first_name="jake", last_name="thalacker")
+
+        user.set_password('badgerbuddy123')
+        user2.set_password('badgerBuddy')
+        user.save()
+        user2.save()
+
+    def test_change_anonyminity(self):
+        prof = Profile.objects.get(user=User.objects.get(username="jthal"))
+        user = User.objects.get(username="jthal")
+        self.assertEqual(prof.anonymous, user.profile.anonymous)
+
+    def test_register_login(self):
+        response = self.client.post("/users/register/", {'username': 'jthal007', 'password1': 'badgerBuddy123',
+                                                        'password2': 'badgerBuddy123', 'email': 'fake@wisc.edu'})
+        user = auth.get_user(self.client)
+        assert user.is_authenticated
+
+    def test_login(self):
+        # send login data
+        response = self.client.post('/users/login/', {'username': 'jthal7', 'password': 'badgerBuddy'}, follow=True)
+        # should be logged in now
+        user = auth.get_user(self.client)
+        assert user.is_authenticated
+
+    def test_logout(self):
+        # send login data
+        response = self.client.post('/users/login/', {'username': 'jthal7', 'password': 'badgerBuddy'}, follow=True)
+        # should be logged in now
+        user = auth.get_user(self.client)
+        response = self.client.post('/users/logout/',)
+        # should be logged out now
+        user = auth.get_user(self.client)
+        assert not user.is_authenticated
 
