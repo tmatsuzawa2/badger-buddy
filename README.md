@@ -100,7 +100,7 @@ A page will show up saying that an verfication email has been sent.
 
 ![iteration_1_reset_password_2](/readme_images/iteration_1_reset_password_2.png)
 
-In iteration 1, we will "send" the email within our project folder, so go to "project_directory/discussion_board/sent_emails", and this should generate a log file containing the email template, like below: 
+In iteration 1, we will "send" the email within our project folder, so go to **"project_directory/discussion_board/sent_emails"**, a log file with the hashed link will be generated, such as the below example: 
 
 > Content-Type: text/plain; charset="utf-8"\
 > MIME-Version: 1.0\
