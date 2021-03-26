@@ -8,12 +8,12 @@ In this iteration, we have accomplished the following features:
 * Emergency help page
 
 ## Setup
-1. Download our iteration 1 branch or <code>git clone the_link</code>
+1. Download the source code iteration 1 branch from https://github.com/BadgerBuddy/badger-buddy/releases/tag/v1.0
 2. Install and create a virtual environment (commands may vary depend on OS): https://docs.python.org/3/tutorial/venv.html 
 3. Open the virtual environment and install following packages:
    * Django: <code>pip install django</code>
    * Django-registration: <code>pip install django-registration</code>
-4. Inside the virtual environment, run the surver <code>python3 manage.py runserver</code> if you are using python3; <code>python manage.py runserver</code> if you are using python.
+4. Inside the virtual environment, go to the project directory and run the surver <code>python3 manage.py runserver</code> if you are using python3; <code>python manage.py runserver</code> if you are using python.
 5. In your browser, redirect to http://localhost:8000/users/login/ to start the adventure!
 
 ## Testing
