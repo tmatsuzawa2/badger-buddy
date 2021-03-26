@@ -15,10 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.contrib.auth import views as auth_views
+from discussion_board.users.forms import EmailValidationOnForgotPassword
 
 urlpatterns = [
     path('board/', include('discussion_board.discussion_board.urls')),
+    path('users/password_reset/', auth_views.PasswordResetView.as_view(form_class=EmailValidationOnForgotPassword), name='password_reset'),
     path('users/', include('django_registration.backends.one_step.urls')),
     path('users/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
+    path('help/', include('discussion_board.help.urls'))
 ]

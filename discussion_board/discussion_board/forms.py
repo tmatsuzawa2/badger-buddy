@@ -18,5 +18,18 @@ class CreatePostForm(forms.Form):
         else:
             return title, details
 
+class CreateReplyForm(forms.Form):
+    details = forms.CharField(label='Details',
+                            max_length=1024,
+                            widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    def check_details(self):
+        details = self.cleaned_data['details']
+        if len(details) == 0:
+            raise ValidationError('Invalid - details should not be empty')
+        else:
+            return details
+
+
 
 

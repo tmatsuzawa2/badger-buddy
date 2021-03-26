@@ -11,17 +11,17 @@
   <body>
   <header>
     <nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background-color: #FBC95B;">
-      <a class="navbar-brand" href="{% url 'index'%}"><img src="{% static 'images/Logo.PNG' %}" width=100px id="logo"></a>
+      <a class="navbar-brand" href="{% url 'board_index'%}"><img src="{% static 'images/Logo.PNG' %}" width=100px id="logo"></a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'index'%}" id="link-item">Discussion Board <span class="sr-only"></span></a>
+            <a class="nav-link" href="{% url 'board_index'%}" id="link-item">Discussion Board <span class="sr-only"></span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" id="link-item">Mindfulness Exercises</a>
+            <a class="nav-link" href="#" id="link-item" >Mindfulness Exercises</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" id="link-item">Resources</a>
+            <a class="nav-link" href="{% url 'help_index'%}" id="link-item">Resources</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#" id="link-item">User Dashboard</a>
@@ -43,4 +43,3 @@
   </footer>
   </body>
 </html>
-
