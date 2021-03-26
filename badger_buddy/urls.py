@@ -21,4 +21,5 @@ urlpatterns = [
     path('users/', include('django_registration.backends.one_step.urls')),
     path('users/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
+    path('help/', include('discussion_board.help.urls'))
 ]
