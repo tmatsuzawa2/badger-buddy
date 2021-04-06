@@ -18,6 +18,7 @@ class CreatePostForm(forms.Form):
         else:
             return title, details
 
+
 class CreateReplyForm(forms.Form):
     details = forms.CharField(label='Details',
                             max_length=1024,
@@ -30,6 +31,12 @@ class CreateReplyForm(forms.Form):
         else:
             return details
 
+class DeleteReplyForm(forms.Form):
+    reply_id = forms.CharField(label='Reply ID', widget=forms.TextInput(attrs={'class': 'form-control'}))
 
-
-
+    def check_reply_id(self):
+        reply_id = self.cleaned_data['reply_id']
+        if len(reply_id) == 0:
+            raise ValidationError('Invalid - Reply ID should not be empty')
+        else:
+            return reply_id

@@ -22,11 +22,20 @@
     </p>
 
     <p>
-        {{reply}}
+        {% for reply in replies %}
+            Reply_ID: {{reply.id}} {{reply}} <br>
+        {% endfor %}
+
     </p>
 
     <a href="{% url 'create-reply' post.id %}" class="btn btn-primary" id="create-button">
             Create reply
+          </a>
+    <a href="{% url 'delete-post' post.id %}" class="btn btn-primary" id="delete-post-button">
+            Delete Post
+          </a>
+    <a href="{% url 'delete-reply' post.id %}" class="btn btn-primary" id="delete-reply-button">
+            Delete Reply
           </a>
 
 
