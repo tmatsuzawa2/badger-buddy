@@ -1,0 +1,33 @@
+{% extends "../layout/base.html" %}
+{% include "style/bootstrap.html" %}
+{% load static %}
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+
+{% block content %}
+
+    <title>
+        View Post Page
+    </title>
+    <p>
+        {{post.title}}
+    </p>
+
+    <p>
+        {{post.details}}
+        {{post.create_date}}
+        {{post.user}}
+    </p>
+
+    <p>
+        {{reply}}
+    </p>
+
+    <a href="{% url 'create-reply' post.id %}" class="btn btn-primary" id="create-button">
+            Create reply
+          </a>
+
+
+{% endblock %}
