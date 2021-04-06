@@ -55,3 +55,13 @@ def create_reply(request, post_id):
 
     return render(request, 'discussion_board/create-reply.html', context)
 
+
+def view_post(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    reply = Reply.objects.filter(post=post)
+    context = {
+        'reply': reply,
+        'post': post
+    }
+
+    return render(request, 'discussion_board/view-post.html', context)

@@ -19,20 +19,15 @@
           {% if posts %}
         {% for post in posts %}
         <div class="list-group" id="post">
-          <a href="{% url 'create-reply' post.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+          <a href="{% url 'view-post' post.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
             <div class="d-flex w-100 justify-content-between">
               <h5 class="mb-1">{{ post.title }}</h5>
               <small> {{ post.create_date }} </small>
             </div>
-            <p class="mb-1"> {{ post.details }} </p>
             <small> Posted By: {{ post.user.username }} </small>
           </a>
         </div>
-          {% for reply in replies %}
-            {% if reply.post == post%}
-            {{ reply }}
-            {% endif %}
-          {% endfor %}
+
         {% endfor %}
       {% else %}
       <p>No posts available.</p>
