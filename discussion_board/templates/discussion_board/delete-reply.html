@@ -2,14 +2,15 @@
 {% include "style/bootstrap.html" %}
 {% load static %}
 
+
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
 
 {% block content %}
 
-    <form action="" method="post" style="width:50%; margin-left:100px;" role="form">
-      {% csrf_token %}
-      {{ form }}
-      <input type="submit" class="btn btn-primary" style="background-color:#FBC95B; border: 0px" value="Delete Reply">
-    </form>
+   <p>
+       Reply deleted
+   </p>
+
 
 {% endblock %}

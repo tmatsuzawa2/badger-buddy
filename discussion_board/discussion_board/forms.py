@@ -30,13 +30,3 @@ class CreateReplyForm(forms.Form):
             raise ValidationError('Invalid - details should not be empty')
         else:
             return details
-
-class DeleteReplyForm(forms.Form):
-    reply_id = forms.CharField(label='Reply ID', widget=forms.TextInput(attrs={'class': 'form-control'}))
-
-    def check_reply_id(self):
-        reply_id = self.cleaned_data['reply_id']
-        if len(reply_id) == 0:
-            raise ValidationError('Invalid - Reply ID should not be empty')
-        else:
-            return reply_id

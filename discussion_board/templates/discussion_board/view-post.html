@@ -20,22 +20,46 @@
         {{post.create_date}}
         {{post.user}}
     </p>
-
-    <p>
+  <body>
+    {% if user.is_authenticated %}
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          {% if replies %}
         {% for reply in replies %}
-            Reply_ID: {{reply.id}} {{reply}} <br>
-        {% endfor %}
+        <div class="list-group" id="reply">
+          <a href="{% url 'view-reply' reply.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ reply.title }}</h5>
+              <small> Reply_ID: {{ reply.id }} </small>
+                <p>
+                    {{reply.details}}
+                </p>
+            </div>
+            <small> Posted By: {{ reply.user.username }} </small>
+          </a>
+        </div>
 
-    </p>
+        {% endfor %}
+      {% else %}
+      <p>No Replies available.</p>
+      {% endif %}
+        </div>
+
+      </div>
+    </div>
+    {% else %}
+    <p style="color: black; width:50%; margin-left:50px; font-size: 16px;">You haven't login yet. Please login first. <br>
+      <a href="{% url 'login' %}" class="btn btn-primary btn-block" style="background-color:#FBC95B; border: 0px; width:150px;">Login here</a></p>
+    {% endif %}
+  </body>
+
 
     <a href="{% url 'create-reply' post.id %}" class="btn btn-primary" id="create-button">
             Create reply
           </a>
     <a href="{% url 'delete-post' post.id %}" class="btn btn-primary" id="delete-post-button">
             Delete Post
-          </a>
-    <a href="{% url 'delete-reply' post.id %}" class="btn btn-primary" id="delete-reply-button">
-            Delete Reply
           </a>
 
 
