@@ -75,7 +75,48 @@ footer {
     /* border: 2px solid gray; */
     /* color: black; */
     /* margin: 100px; */
-    margin-top: 100px;
+    margin-top: 70px;
+    margin-left: 200px;
+    position: fixed;
+    width: 300px;
+}
+
+#create-reply-button {
+    /* position: relative; */
+    background-color:#DAA8C6;
+    border-radius: 10px;
+    border: black;
+    /* border: 2px solid gray; */
+    /* color: black; */
+    /* margin: 100px; */
+    margin-top: 70px;
+    margin-left: 200px;
+    position: fixed;
+    width: 300px;
+}
+#delete-post-button {
+    /* position: relative; */
+    background-color:#68C8B5;
+    border-radius: 10px;
+    border: black;
+    /* border: 2px solid gray; */
+    /* color: black; */
+    /* margin: 100px; */
+    margin-top: 20px;
+    margin-left: 200px;
+    position: fixed;
+    width: 300px;
+}
+
+#delete-reply-button {
+    /* position: relative; */
+    background-color:#DAA8C6;
+    border-radius: 10px;
+    border: black;
+    /* border: 2px solid gray; */
+    /* color: black; */
+    /* margin: 100px; */
+    margin-top: 20px;
     margin-left: 200px;
     position: fixed;
     width: 300px;
@@ -89,7 +130,7 @@ footer {
 }
 
 #reply {
-    background-color:#68C8B5;
+    background-color:#DAA8C6;
     margin-top:20px;
     margin-left:30px;
     padding:10px;

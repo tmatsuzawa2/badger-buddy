@@ -4,6 +4,8 @@
 
 
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+
 <!DOCTYPE html>
 <html>
   {% block content %}
@@ -16,7 +18,7 @@
     <div class="container">
       <div class="row">
         <div class="col">
-            <div class="list-group" id="main-post">
+            <div class="list-group" id="post">
               <a href="" class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
                   <h5 class="mb-1">{{ post.title }}</h5>
@@ -26,14 +28,17 @@
                 <small> Posted By: {{ post.user.username }} </small>
               </a>
             </div>
-            {% if reply %}
-                {% for reply in reply %}
+            {% if replies %}
+                {% for reply in replies %}
                     <div class="list-group" id="reply">
+                        <a href="{% url 'view-reply' reply.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <p id="reply-details">{{reply.details}}</p>
                         <div class="d-flex w-100 justify-content-between">
                           <h8 class="mb-1"><small> Posted By: {{ reply.user.username }} </small></h8>
                           <small> {{ reply.create_date }} </small>
                         </div>
-                        <p id="reply-details">{{reply.details}}</p>
+
+                        </a>
                     </div>
                 {% endfor %}
           {% endif %}
@@ -43,12 +48,12 @@
     {% endif %}
         </div>
           <div class = 'col'>
-              <a href="{% url 'create-reply' post.id %}" class="btn btn-primary" id="create-button">
+              <a href="{% url 'create-reply' post.id %}" class="btn btn-primary" id="create-reply-button">
             Create reply
           </a>
-                  <a href="{% url 'delete-post' post.id %}" class="btn btn-primary" id="delete-post-button">
-            Delete Post
-          </a>
+            <a href="{% url 'delete-post' post.id %}" class="btn btn-primary" id="delete-post-button">
+              Delete Post
+            </a>
           </div>
       </div>
     </div>
