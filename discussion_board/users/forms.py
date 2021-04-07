@@ -44,6 +44,13 @@ class UserRegistrationForm(RegistrationForm):
         self.fields[email_field].validators.append(
             RegexValidator(r'^([\w-]+(?:\.[\w-]+)*)@wisc.edu|^([\w-]+(?:\.[\w-]+)*)@((?:[\w-].)*\w[\w-]{0,5})\.wisc.edu', message="Please enter a wisc email")
         )
+        self.fields["first_name"].validators.append(
+            RegexValidator(r'^[A-Za-z]{3,20}$', message="Your name should be from 3-20 characters, alphabet only")
+        )
+        self.fields["last_name"].validators.append(
+            RegexValidator(r'^[A-Za-z]{3,20}$', message="Your name should be from 3-20 characters, alphabet only")
+        )
+        
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -54,3 +61,31 @@ class UserRegistrationForm(RegistrationForm):
         if commit:
             user.save()
         return user
+
+class EditProfileForm(forms.Form):
+    anonymous = forms.BooleanField(label='Anonymity', widget=forms.CheckboxInput(attrs={'class': 'form-check'}), required=False)
+    username = forms.CharField(label='Username', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    first_name = forms.CharField(label='First Name', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    last_name = forms.CharField(label='Last Name', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["first_name"].validators.append(
+            RegexValidator(r'^[A-Za-z]{3,20}$', message="Your name should be 3-20 characters, alphabet only")
+        )
+        self.fields["last_name"].validators.append(
+            RegexValidator(r'^[A-Za-z]{3,20}$', message="Your name should be 3-20 characters, alphabet only")
+        )
+        self.fields["username"].validators.append(
+            RegexValidator(r'^[A-Za-z0-9-_]{3,20}$', message="Your new username should be 3-20 characters, alphabet, numbers, hiphen and underscore only")
+        )
+
+    def clean_username(self):
+        username = self.cleaned_data.get("username")
+        email = self.cleaned_data.get("email")
+        print(email)
+        #if User.objects.filter(username__iexact=username).exclude(email__iexact=email).exists():
+        #    raise ValidationError("The username has already been taken.")
+            
+        return username
