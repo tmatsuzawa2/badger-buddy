@@ -94,6 +94,7 @@ class Quotes(models.Model):
     def str(self):
         return self.content
 
+
 class Prompts(models.Model):
     text = models.TextField()
 
