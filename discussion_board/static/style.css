@@ -4,6 +4,7 @@ a {
   color: black;
 }
 
+
 a:hover {
   color: black;
   text-decoration: underline;
@@ -58,7 +59,8 @@ footer {
     border-radius: 10px;
 }
 
-#main-post {
+
+#post {
     background-color:#68C8B5;
     margin-top:20px;
     padding:10px;
