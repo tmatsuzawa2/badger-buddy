@@ -1,0 +1,8 @@
+Dear Mr/Ms. {{ user.last_name }}
+
+Welcome to BadgerBuddy! Here is your activate link for registration:
+{{ scheme }}://{{ site.domain }}/users/activate/{{ activation_key }}
+
+Please note that this page will expire in {{ expiration_days }} day{{ expiration_days|pluralize }}.
+
+If you didn't register the account, please inform us by badger@buddy.com. Thank you for you cooperation!
