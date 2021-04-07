@@ -1,0 +1,34 @@
+{% extends "../layout/base.html" %}
+{% include "style/bootstrap.html" %}
+{% load static %}
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+
+{% block content %}
+
+    <title>
+        View Reply Page
+    </title>
+    <p>
+        {{reply.title}}
+    </p>
+
+    <p>
+        {{reply.details}}
+        {{reply.create_date}}
+        {{reply.user}}
+    </p>
+
+    <p>
+        Reply_ID: {{reply.id}}
+    </p>
+
+
+    <a href="{% url 'delete-reply' reply.id %}" class="btn btn-primary" id="delete-reply-button">
+            Delete Reply
+          </a>
+
+
+{% endblock %}

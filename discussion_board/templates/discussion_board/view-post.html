@@ -4,8 +4,6 @@
 
 
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
-
-
 <!DOCTYPE html>
 <html>
   {% block content %}
@@ -47,6 +45,9 @@
           <div class = 'col'>
               <a href="{% url 'create-reply' post.id %}" class="btn btn-primary" id="create-button">
             Create reply
+          </a>
+                  <a href="{% url 'delete-post' post.id %}" class="btn btn-primary" id="delete-post-button">
+            Delete Post
           </a>
           </div>
       </div>
