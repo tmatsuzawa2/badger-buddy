@@ -6,28 +6,50 @@
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 
 
-{% block content %}
-
-    <title>
-        View Post Page
-    </title>
-    <p>
-        {{post.title}}
-    </p>
-
-    <p>
-        {{post.details}}
-        {{post.create_date}}
-        {{post.user}}
-    </p>
-
-    <p>
-        {{reply}}
-    </p>
-
-    <a href="{% url 'create-reply' post.id %}" class="btn btn-primary" id="create-button">
+<!DOCTYPE html>
+<html>
+  {% block content %}
+  <head>
+    <meta charset="utf-8" />
+    <title>View Post Page</title>
+  </head>
+  <body>
+    {% if user.is_authenticated %}
+    <div class="container">
+      <div class="row">
+        <div class="col">
+            <div class="list-group" id="main-post">
+              <a href="" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">{{ post.title }}</h5>
+                  <small> {{ post.create_date }} </small>
+                </div>
+                <p>{{post.details}}</p>
+                <small> Posted By: {{ post.user.username }} </small>
+              </a>
+            </div>
+            {% if reply %}
+                {% for reply in reply %}
+                    <div class="list-group" id="reply">
+                        <div class="d-flex w-100 justify-content-between">
+                          <h8 class="mb-1"><small> Posted By: {{ reply.user.username }} </small></h8>
+                          <small> {{ reply.create_date }} </small>
+                        </div>
+                        <p id="reply-details">{{reply.details}}</p>
+                    </div>
+                {% endfor %}
+          {% endif %}
+    {% else %}
+    <p style="color: black; width:50%; margin-left:50px; font-size: 16px;">You haven't login yet. Please login first. <br>
+      <a href="{% url 'login' %}" class="btn btn-primary btn-block" style="background-color:#FBC95B; border: 0px; width:150px;">Login here</a></p>
+    {% endif %}
+        </div>
+          <div class = 'col'>
+              <a href="{% url 'create-reply' post.id %}" class="btn btn-primary" id="create-button">
             Create reply
           </a>
-
-
+          </div>
+      </div>
+    </div>
+  </body>
 {% endblock %}
