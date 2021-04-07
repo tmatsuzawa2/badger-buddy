@@ -1,0 +1,29 @@
+{% extends "../layout/base.html" %}
+{% include "style/bootstrap.html" %}
+{% load static %}
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+<!DOCTYPE html>
+<html lang="en">
+    {% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help and Resources Page</title>
+</head>
+<body>
+<div>
+    <p> Inspirational Quote: </p>
+        <p>"{{quote.text}}" -{{quote.author}}</p>
+
+</div>
+<div>
+    <p> Journal Entry: </p>
+        <p>{{prompt.text}}</p>
+
+</div>
+</body>
+ {% endblock %}
+</html>
