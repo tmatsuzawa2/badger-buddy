@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from ..models import Post
+from django.contrib.auth.models import User
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 
 def index(request):
     context = {
-        'posts': Post.objects.all()
+        'user': request.user
     }
-    return render(request, 'users/login.html', context)
+    return render(request, 'users/index.html', context)

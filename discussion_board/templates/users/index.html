@@ -1,20 +1,36 @@
-{% include "style/bootstrap.html" %}  
+{% extends "../layout/base.html" %}
+{% include "style/bootstrap.html" %}
+{% load static %}
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 
 <!DOCTYPE html>
 <html>
+  {% block content %}
   <head>
     <meta charset="utf-8" />
-    <title>Create an account</title>
+    <title>User Dashboard</title>
   </head>
   <body>
-    {% if posts %}
-    <ul>
-      {% for post in posts %}
-      <li>{{ post.user.username }} {{ post.title }} {{ post.create_date }}</li>
-      {% endfor %}
-    </ul>
+    {% if user.is_authenticated %}
+    <div style="color: black; width:50%; margin-left:50px;"> 
+      <h4 >User Dashboard</h4>
+      <ul>
+        <li>Username: {{ user.username }} </li>
+        <li>First Name: {{ user.first_name }} </li>
+        <li>Last Name: {{ user.last_name }} </li>
+        <li>Email: {{ user.email }} </li>
+        <li>Anonymity: {{ user.anonymous }} </li>
+      </ul>
+      <a class="btn btn-primary" href="/admin-url">Edit Profile</a>
+      <br>
+      <a href="{% url 'password_reset' %}" style="font-size: 16px;"> Want to change your password? Reset here </a>
+    </div>
     {% else %}
-    <p>No posts available.</p>
+    <p style="color: black; width:50%; margin-left:50px; font-size: 16px;">You haven't login yet. Please login first. <br>
+      <a href="{% url 'login' %}" class="btn btn-primary btn-block" style="background-color:#FBC95B; border: 0px; width:150px;">Login here</a></p>
     {% endif %}
   </body>
+  {% endblock %}
 </html>
