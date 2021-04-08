@@ -2,7 +2,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from ..models import Post, Reply
 from .forms import CreatePostForm, CreateReplyForm
-
+from django.views.generic.edit import UpdateView
+from django.urls import reverse
 
 # Create your views here.
 
@@ -97,3 +98,19 @@ def delete_reply(request, reply_id):
 
     context = {}
     return render(request, 'discussion_board/delete-reply.html', context)
+
+class EditPost(UpdateView):
+    model = Post
+    fields = ['title', 'details']
+    template_name = 'discussion_board/edit-post.html'
+
+    def get_success_url(self):
+        return '/board/view-post/' + str(self.object.id)
+
+class EditReply(UpdateView):
+    model = Reply
+    fields = ['details']
+    template_name = 'discussion_board/edit-reply.html'
+
+    def get_success_url(self):
+        return '/board/view-post/' + str(self.object.post.id)
