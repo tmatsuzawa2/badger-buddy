@@ -5,7 +5,7 @@ from django.contrib import auth
 from django.test import TestCase
 import datetime
 from .discussion_board.forms import CreatePostForm, CreateReplyForm
-from .models import Post, Tags, Post_Tags, Reply, Meeting, MeetingUsers, Activity, Profile
+from .models import Post, Tags, Post_Tags, Reply, Meeting, MeetingUsers, Profile, Quotes, Prompts
 from django.contrib.auth.models import User as User
 
 
@@ -41,8 +41,8 @@ class ModelTests(TestCase):
                                post=Post.objects.get(title="Mental Help 2"))
         MeetingUsers.objects.create(meeting=Meeting.objects.get(post=Post.objects.get(title="Mental Help 2")),
                                     user=User.objects.get(username="jthal7"))
-        Activity.objects.create(type_id="prompt", content="What is something nice you did for someone today?")
-        Activity.objects.create(type_id="quote", content="\"Every Professional was once a beginner\"-anonymous")
+        Quotes.objects.create(text="JAKE IS COOL", author="Yashash")
+        Prompts.objects.create(text="Is Jake cool? (only answer is yes)")
 
     def test_User_objects(self):
         user = User.objects.get(username="jthal")
@@ -100,6 +100,7 @@ class PostTests(TestCase):
 
         self.user = User.objects.create_superuser(username="testUser", password="TestUserPass",
                                                   email="testUser@example.com")
+        self.user2 = User.objects.get(username="jthal")
         self.client.force_login(self.user)
 
     def test_form_valid(self):
@@ -121,6 +122,29 @@ class PostTests(TestCase):
         response = self.client.post("/board/create-post", {'title': 'something', 'details': 'something 2'})
         post = Post.objects.get(title='something')
         self.assertEqual(post.user, self.user)
+
+    def test_post_deleted(self):
+        response1 = self.client.post("/board/create-post", {'title': 'something 1', 'details': 'details 1'})
+        response2 = self.client.post("/board/create-post", {'title': 'something 2', 'details': 'details 2'})
+
+        # Test if post is successfully deleted
+        delete = self.client.delete("/board/delete-post/2")
+        try:
+            post1 = Post.objects.get(title='something 1')
+            self.fail()
+        except Post.DoesNotExist:
+            pass
+
+        # Log second user in
+        self.client.logout()
+        self.client.force_login(self.user2)
+        # Test if post not deleted by user that does not own post
+        delete = self.client.delete("/board/delete-post/3")
+        try:
+            post2 = Post.objects.get(title='something 2')
+            self.assertEqual(post2.details, 'details 2')
+        except Post.DoesNotExist:
+            self.fail()
 
     def test_not_logged_in(self):
         self.client.logout()
@@ -146,8 +170,13 @@ class ReplyTests(TestCase):
                             details="I recieved help from jthals post",
                             create_date=datetime.datetime.now(),
                             user=User.objects.get(username="jthal7"))
+        Post.objects.create(title="Mental Help 3",
+                            details="I recieved help from jthals post",
+                            create_date=datetime.datetime.now(),
+                            user=User.objects.get(username="jthal7"))
 
         self.user = User.objects.get(username="jthal7")
+        self.user2 = User.objects.get(username="jthal")
         self.client.force_login(self.user)
 
     def test_reply_form_valid(self):
@@ -158,6 +187,31 @@ class ReplyTests(TestCase):
     def test_reply_form_not_empty(self):
         response = self.client.post("/board/create-reply/1", {'details': ''})
         self.assertFormError(response, 'form', 'details', 'This field is required.')
+
+    def test_reply_deleted(self):
+        # Test if reply is successfully deleted by user that owns reply
+        response1 = self.client.post("/board/create-reply/2", {'details': 'first reply'})
+        response2 = self.client.post("/board/create-reply/2", {'details': 'second reply'})
+
+        delete = self.client.delete("/board/delete-reply/2/2")
+        try:
+            reply2 = Reply.objects.get(post=Post.objects.get(id=2), details='second reply')
+            self.fail()
+        except AssertionError:
+            reply1 = Reply.objects.get(post=Post.objects.get(id=2), details='first reply')
+            self.assertEqual(reply1.details, 'first reply')
+
+        # Log in user that does not own any replies
+        # Try deleting reply made by other user
+        self.client.logout()
+        self.client.force_login(self.user2)
+        delete = self.client.delete("/board/delete-reply/2/1")
+        reply_not_deleted = Reply.objects.get(post=Post.objects.get(id=2), details='first reply')
+        self.assertEqual(reply_not_deleted.details, 'first reply')
+
+        # Log user back in
+        self.client.logout()
+        self.client.force_login(self.user)
 
     def test_reply_created(self):
         response = self.client.post("/board/create-reply/1", {'details': 'something'})
