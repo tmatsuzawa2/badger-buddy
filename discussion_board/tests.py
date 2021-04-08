@@ -100,6 +100,7 @@ class PostTests(TestCase):
 
         self.user = User.objects.create_superuser(username="testUser", password="TestUserPass",
                                                   email="testUser@example.com")
+        self.user2 = User.objects.get(username="jthal")
         self.client.force_login(self.user)
 
     def test_form_valid(self):
@@ -123,13 +124,28 @@ class PostTests(TestCase):
         self.assertEqual(post.user, self.user)
 
     def test_post_deleted(self):
-        delete = self.client.delete("/board/delete-post/1")
+        response1 = self.client.post("/board/create-post", {'title': 'something 1', 'details': 'details 1'})
+        response2 = self.client.post("/board/create-post", {'title': 'something 2', 'details': 'details 2'})
+
+        # Test if post is successfully deleted
+        delete = self.client.delete("/board/delete-post/2")
         try:
-            post = Post.objects.get(title='Mental Help 2')
+            post1 = Post.objects.get(title='something 1')
             self.fail()
-        except AssertionError:
+        except Post.DoesNotExist:
             pass
-    
+
+        # Log second user in
+        self.client.logout()
+        self.client.force_login(self.user2)
+        # Test if post not deleted by user that does not own post
+        delete = self.client.delete("/board/delete-post/3")
+        try:
+            post2 = Post.objects.get(title='something 2')
+            self.assertEqual(post2.details, 'details 2')
+        except Post.DoesNotExist:
+            self.fail()
+
     def test_not_logged_in(self):
         self.client.logout()
         try:
@@ -173,8 +189,8 @@ class ReplyTests(TestCase):
         self.assertFormError(response, 'form', 'details', 'This field is required.')
 
     def test_reply_deleted(self):
-        # Test if reply is one reply is successfully deleted by user that owns reply
-        response1 = self.client.post("/board/create-reply/2", {'details': 'to be deleted'})
+        # Test if reply is successfully deleted by user that owns reply
+        response1 = self.client.post("/board/create-reply/2", {'details': 'first reply'})
         response2 = self.client.post("/board/create-reply/2", {'details': 'second reply'})
 
         delete = self.client.delete("/board/delete-reply/2/2")
@@ -182,15 +198,16 @@ class ReplyTests(TestCase):
             reply2 = Reply.objects.get(post=Post.objects.get(id=2), details='second reply')
             self.fail()
         except AssertionError:
-            reply1 = Reply.objects.get(post=Post.objects.get(id=2), details='to be deleted')
-            self.assertEqual(reply1.details, 'to be deleted')
+            reply1 = Reply.objects.get(post=Post.objects.get(id=2), details='first reply')
+            self.assertEqual(reply1.details, 'first reply')
 
-        # Test if reply is one reply is not deleted by user that does not own reply
+        # Log in user that does not own any replies
+        # Try deleting reply made by other user
         self.client.logout()
         self.client.force_login(self.user2)
         delete = self.client.delete("/board/delete-reply/2/1")
-        reply_not_deleted = Reply.objects.get(post=Post.objects.get(id=2), details='to be deleted')
-        self.assertEqual(reply_not_deleted.details, 'to be deleted')
+        reply_not_deleted = Reply.objects.get(post=Post.objects.get(id=2), details='first reply')
+        self.assertEqual(reply_not_deleted.details, 'first reply')
 
         # Log user back in
         self.client.logout()
