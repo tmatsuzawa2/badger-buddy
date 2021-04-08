@@ -80,8 +80,11 @@ def delete_post(request, post_id):
     context = {}
     post = get_object_or_404(Post, id=post_id)
     reply = Reply.objects.filter(post=post)
-    post.delete()
-    reply.delete()
+    if request.user == post.user:
+        post.delete()
+        reply.delete()
+    else:
+        return HttpResponse('<h1>You are not authorized to delete</h1>')
     return render(request, "discussion_board/delete-post.html", context)
 
 
