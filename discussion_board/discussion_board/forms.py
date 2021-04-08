@@ -30,6 +30,3 @@ class CreateReplyForm(forms.Form):
         else:
             return details
 
-
-
-

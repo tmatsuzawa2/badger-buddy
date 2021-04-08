@@ -37,4 +37,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('help/', include('discussion_board.help.urls')),
     path('profile/', include('discussion_board.users.urls'))
+    path('exercises/', include('discussion_board.exercises.urls'))
 ]

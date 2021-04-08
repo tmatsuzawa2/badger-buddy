@@ -1,6 +1,7 @@
 a {
   font-size: 20px;
   text-decoration: none;
+  color: black;
 }
 
 
@@ -45,7 +46,19 @@ body {
 
 footer {
     margin-top: 20px;
+    margin-left:0px;
+    padding-left: 0px;
+    padding-right:0px;
+    margin-right:0px;
 }
+
+#post {
+    background-color:#68C8B5;
+    margin-top:20px;
+    padding:10px;
+    border-radius: 10px;
+}
+
 
 #post {
     background-color:#68C8B5;
@@ -58,9 +71,81 @@ footer {
     /* position: relative; */
     background-color:#68C8B5;
     border-radius: 10px;
+    border: black;
     /* border: 2px solid gray; */
     /* color: black; */
     /* margin: 100px; */
-    margin: 300px;
+    margin-top: 70px;
+    margin-left: 200px;
     position: fixed;
+    width: 300px;
+}
+
+#create-reply-button {
+    /* position: relative; */
+    background-color:#DAA8C6;
+    border-radius: 10px;
+    border: black;
+    /* border: 2px solid gray; */
+    /* color: black; */
+    /* margin: 100px; */
+    margin-top: 70px;
+    margin-left: 200px;
+    position: fixed;
+    width: 300px;
+}
+#delete-post-button {
+    /* position: relative; */
+    background-color:#68C8B5;
+    border-radius: 10px;
+    border: black;
+    /* border: 2px solid gray; */
+    /* color: black; */
+    /* margin: 100px; */
+    margin-top: 20px;
+    margin-left: 200px;
+    position: fixed;
+    width: 300px;
+}
+
+#delete-reply-button {
+    /* position: relative; */
+    background-color:#DAA8C6;
+    border-radius: 10px;
+    border: black;
+    /* border: 2px solid gray; */
+    /* color: black; */
+    /* margin: 100px; */
+    margin-top: 20px;
+    margin-left: 200px;
+    position: fixed;
+    width: 300px;
+}
+
+#resources {
+    background-color:blue;
+    margin-top:20px;
+    padding:10px;
+    border-radius: 10px;
+}
+
+#reply {
+    background-color:#DAA8C6;
+    margin-top:20px;
+    margin-left:30px;
+    padding:10px;
+    border-radius: 10px;
+    font-family: Lucida Bright;
+}
+
+#reply-details {
+    font-size: 20px;
+}
+
+#support {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    width: 350px;
 }

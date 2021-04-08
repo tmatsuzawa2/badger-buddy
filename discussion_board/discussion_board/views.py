@@ -1,7 +1,8 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from ..models import Post, Reply
 from .forms import CreatePostForm, CreateReplyForm
+
 
 # Create your views here.
 
@@ -58,10 +59,41 @@ def create_reply(request, post_id):
 
 def view_post(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    reply = Reply.objects.filter(post=post)
+    replies = Reply.objects.filter(post=post)
     context = {
-        'reply': reply,
-        'post': post
+        'replies': replies,
+        'post': post,
     }
 
     return render(request, 'discussion_board/view-post.html', context)
+
+
+def view_reply(request, reply_id):
+    reply = get_object_or_404(Reply, pk=reply_id)
+    context = {
+        'reply': reply
+    }
+    return render(request, 'discussion_board/view-reply.html', context)
+
+
+def delete_post(request, post_id):
+    context = {}
+    post = get_object_or_404(Post, id=post_id)
+    reply = Reply.objects.filter(post=post)
+    if request.user == post.user:
+        post.delete()
+        reply.delete()
+    else:
+        return HttpResponse('<h1>You are not authorized to delete</h1>')
+    return render(request, "discussion_board/delete-post.html", context)
+
+
+def delete_reply(request, reply_id):
+    reply = get_object_or_404(Reply, pk=reply_id)
+    if request.user == reply.user:
+        reply.delete()
+    else:
+        return HttpResponse('<h1>You are not authorized to delete</h1>')
+
+    context = {}
+    return render(request, 'discussion_board/delete-reply.html', context)
