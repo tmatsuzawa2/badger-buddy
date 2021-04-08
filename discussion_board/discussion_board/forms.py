@@ -18,7 +18,6 @@ class CreatePostForm(forms.Form):
         else:
             return title, details
 
-
 class CreateReplyForm(forms.Form):
     details = forms.CharField(label='Details',
                             max_length=1024,
@@ -30,3 +29,4 @@ class CreateReplyForm(forms.Form):
             raise ValidationError('Invalid - details should not be empty')
         else:
             return details
+

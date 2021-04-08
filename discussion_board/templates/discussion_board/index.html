@@ -2,6 +2,7 @@
 {% include "style/bootstrap.html" %}
 {% load static %}
 
+
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 
 <!DOCTYPE html>
@@ -27,14 +28,13 @@
             <small> Posted By: {{ post.user.username }} </small>
           </a>
         </div>
-
         {% endfor %}
       {% else %}
       <p>No posts available.</p>
       {% endif %}
         </div>
         <div class="col">
-          <a href="/board/create-post" class="btn btn-primary" id="create-button">
+          <a href="/board/create-post" class="btn btn-primary btn-block" id="create-button">
             Create post
           </a>
         </div>
