@@ -36,6 +36,6 @@ urlpatterns = [
     path('users/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
     path('help/', include('discussion_board.help.urls')),
-    path('profile/', include('discussion_board.users.urls'))
+    path('profile/', include('discussion_board.users.urls')),
     path('exercises/', include('discussion_board.exercises.urls'))
 ]
