@@ -54,6 +54,11 @@
             <a href="{% url 'delete-post' post.id %}" class="btn btn-primary" id="delete-post-button">
               Delete Post
             </a>
+            {% if user == post.user %}
+              <a href="{% url 'edit-post' post.id %}" class="btn btn-primary" id="edit-post-button">
+                Edit Post
+              </a>
+            {% endif %}
           </div>
       </div>
     </div>
