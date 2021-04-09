@@ -51,9 +51,11 @@
               <a href="{% url 'create-reply' post.id %}" class="btn btn-primary" id="create-reply-button">
             Create reply
           </a>
+            {% if user == post.user %}
             <a href="{% url 'delete-post' post.id %}" class="btn btn-primary" id="delete-post-button">
               Delete Post
             </a>
+            {% endif %}
             {% if user == post.user %}
               <a href="{% url 'edit-post' post.id %}" class="btn btn-primary" id="edit-post-button">
                 Edit Post

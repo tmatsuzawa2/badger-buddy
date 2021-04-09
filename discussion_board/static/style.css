@@ -83,7 +83,7 @@ footer {
     /* border: 2px solid gray; */
     /* color: black; */
     /* margin: 100px; */
-    margin-top: 70px;
+    margin-top: 120px;
     margin-left: 200px;
     position: fixed;
     width: 300px;
@@ -102,6 +102,33 @@ footer {
     width: 300px;
 }
 
+#edit-post-button {
+    background-color:#68C8B5;
+    border-radius: 10px;
+    border: black;
+    /* border: 2px solid gray; */
+    /* color: black; */
+    /* margin: 100px; */
+    margin-top: 70px;
+    margin-left: 200px;
+    position: fixed;
+    width: 300px;
+}
+
+#edit-reply-button {
+    background-color:#68C8B5;
+    border-radius: 10px;
+    border: black;
+    /* border: 2px solid gray; */
+    /* color: black; */
+    /* margin: 100px; */
+    margin-top: 70px;
+    margin-left: 200px;
+    position: fixed;
+    width: 300px;
+}
+
+
 #delete-reply-button {
     /* position: relative; */
     background-color:#68C8B5;
@@ -115,6 +142,7 @@ footer {
     position: fixed;
     width: 300px;
 }
+
 
 #resources {
     background-color:blue;
