@@ -120,7 +120,7 @@ When you click on your post, you will be able to see your post content "Goodnigh
 ### (Iteration 2 added) Edit and delete post
 Now you can edit or delete your post by clicking the corresponding button. Feel free to change it according to your preferences, yet in this walkthrough we will not edit or delete it. 
 
-![iteration_2_post_edit](/readme_images/iteration_2_post_edit.png)
+![iteration_2_post_edit](/readme_images/iteration_2_edit_post.png)
 
 ![iteration_2_post_delete](/readme_images/iteration_2_post_delete.png)
 
@@ -142,11 +142,17 @@ Click on the reply box. Now you can edit or delete your reply by clicking the co
 
 ![iteration_2_reply_delete](/readme_images/iteration_2_reply_delete.png)
 
-### Resource and Help Page
+### (Iteration 2 modified) Resource and Help Page
 
 On the navigation bar at the top, click on the "Resource" to Emergency help page. The page lists contact information that user can get direct mental help from. 
 
-![iteration_1_help](/readme_images/iteration_1_help.png)
+![iteration_2_help](/readme_images/iteration_2_help.png)
+
+### (Iteration 2 added) Mindfulness Exercise Page
+
+On the navigation bar at the top, click on the "Mindfulness Exercise" to exercise page. The page will show a random Inspirational Quote (on the left) and Journal Entry (on the right). New messages will show up when you refresh the page. 
+
+![iteration_2_exercise](/readme_images/iteration_2_exercise.png)
 
 ### Logout and Reset Password
 
