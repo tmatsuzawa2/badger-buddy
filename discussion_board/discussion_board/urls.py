@@ -10,5 +10,6 @@ urlpatterns = [
     path('view-reply/<int:reply_id>', views.view_reply, name='view-reply'),
     path('delete-post/<int:post_id>', views.delete_post, name='delete-post'),
     path('delete-reply/<int:reply_id>', views.delete_reply, name='delete-reply'),
-
+    path('edit-post/<int:pk>', views.EditPost.as_view(), name='edit-post'),
+    path('edit-reply/<int:pk>', views.EditReply.as_view(), name='edit-reply'),
 ]

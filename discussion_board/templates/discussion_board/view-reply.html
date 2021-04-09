@@ -18,7 +18,7 @@
       <div class="row">
         <div class="col">
             <div class="list-group" id="reply">
-                <a href="" class="list-group-item list-group-item-action flex-column align-items-start">
+                <a href="" class="list-group-item list-group-item-action flex-column align-items-start" id="inner-reply">
               <p id="reply-details">{{reply.details}}</p>
                 <div class="d-flex w-100 justify-content-between">
                   <h8 class="mb-1"><small> Posted By: {{ reply.user.username }} </small></h8>
@@ -32,9 +32,16 @@
     {% endif %}
         </div>
            <div class = 'col'>
+               {% if user == reply.user %}
                <a href="{% url 'delete-reply' reply.id %}" class="btn btn-primary" id="delete-reply-button">
                     Delete Reply
                </a>
+               {% endif %}
+               {% if user == reply.user %}
+                <a href="{% url 'edit-reply' reply.id %}" class="btn btn-primary" id="edit-reply-button">
+                      Edit Reply
+                </a>
+               {% endif %}
           </div>
       </div>
     </div>

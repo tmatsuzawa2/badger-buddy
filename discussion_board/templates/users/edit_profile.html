@@ -11,6 +11,7 @@
 
 <form method="post" action="{% url 'edit_profile' %}" style="width:50%; margin-left:50px;" role="form">
   {% csrf_token %}
+  <div class="list-group" id="profile">
     <div class="form-group">
       <label for="username">{{form.username.label_tag}}</label>
       <input type="text" name="username" class="form-control" maxlength="32" required id="username" value={{user.username}}>
@@ -33,10 +34,11 @@
         <label class="form-check-label" for="anonymous">I don't want other users to view my personal information.</label>
       </div>
     </div>
-    <a class="btn btn-primary" style="border: 0px" href="{% url 'user_dashboard' %}">Cancel</a>
-    <input type="submit" class="btn btn-primary" style="border: 0px" value="Save">
+  </div>
+      <input type="submit" class="btn btn-primary" style="background-color:#EA743F; border: 0px; width=50%; margin-left: 30px; margin-top:10px;" value="Save">
+    <a class="btn btn-primary" style="background-color:#EA743F; border: 0px; width=50%; margin-left: 5px; margin-top:10px;" href="{% url 'user_dashboard' %}">Cancel</a>
     <br>
-    <a href="{% url 'password_reset' %}" style="font-size: 16px;"> Want to change your password? Reset here </a>
+      <a class="btn btn-primary" style="background-color:#EA743F; border: 0px; width=50%; margin-left: 30px; margin-top:10px;" href="{% url 'password_reset' %}">Reset Password</a>
 </form>
 
 {% endblock %}
