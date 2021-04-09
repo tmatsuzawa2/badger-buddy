@@ -7,7 +7,7 @@ In this iteration, we have accomplished the following features:
 * More major UI improvements
 
 ## Setup
-1. Download our iteration 2 branch
+1. Download the iteration 2 release
 2. Install and create a virtual environment (commands may vary depend on OS): https://docs.python.org/3/tutorial/venv.html 
 3. Open the virtual environment and install following packages:
    * Django: <code>pip install django</code>
