@@ -18,12 +18,24 @@ from django.urls import include, path
 from django.contrib.auth import views as auth_views
 from discussion_board.users.forms import EmailValidationOnForgotPassword
 
+from django_registration.backends.activation.views import RegistrationView
+from discussion_board.users.forms import UserRegistrationForm
+
 urlpatterns = [
     path('board/', include('discussion_board.discussion_board.urls')),
     path('users/password_reset/', auth_views.PasswordResetView.as_view(form_class=EmailValidationOnForgotPassword), name='password_reset'),
-    path('users/', include('django_registration.backends.one_step.urls')),
+    path('users/register/',
+        RegistrationView.as_view(
+            form_class=UserRegistrationForm
+        ),
+        name='django_registration_register',
+    ),
+    path('users/',
+        include('django_registration.backends.activation.urls')
+    ),
     path('users/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
     path('help/', include('discussion_board.help.urls')),
+    path('profile/', include('discussion_board.users.urls')),
     path('exercises/', include('discussion_board.exercises.urls'))
 ]

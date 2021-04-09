@@ -1,0 +1,13 @@
+{% extends "../layout/basic.html" %}
+{% include "style/bootstrap.html" %}
+{% load static %}
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+{% block content %}
+<h4 style="color: black; width:50%; margin-left:50px;">Activate Successful! </h4>
+<a href="/users/login" class="btn btn-primary btn-block" style="margin-left:50px; background-color:#FBC95B; border: 0px; width:350px;">Click here to login</a></p>
+<br>
+
+{% endblock %}
