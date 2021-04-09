@@ -16,10 +16,10 @@
   <body>
     {% if user.is_authenticated %}
     <div class="container">
-      <div class="row">
+      <div class="row" id="post-spacing">
         <div class="col">
             <div class="list-group" id="post">
-              <a href="" class="list-group-item list-group-item-action flex-column align-items-start">
+              <a href="" class="list-group-item list-group-item-action flex-column align-items-start" id="inner-post">
                 <div class="d-flex w-100 justify-content-between">
                   <h5 class="mb-1">{{ post.title }}</h5>
                   <small> {{ post.create_date }} </small>
@@ -31,7 +31,7 @@
             {% if replies %}
                 {% for reply in replies %}
                     <div class="list-group" id="reply">
-                        <a href="{% url 'view-reply' reply.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <a href="{% url 'view-reply' reply.id %}" class="list-group-item list-group-item-action flex-column align-items-start" id="inner-reply">
                         <p id="reply-details">{{reply.details}}</p>
                         <div class="d-flex w-100 justify-content-between">
                           <h8 class="mb-1"><small> Posted By: {{ reply.user.username }} </small></h8>
@@ -43,7 +43,7 @@
                 {% endfor %}
           {% endif %}
     {% else %}
-    <p style="color: black; width:50%; margin-left:50px; font-size: 16px;">You haven't login yet. Please login first. <br>
+    <p style="color: black; width:50%; margin-left:50px; font-size: 16px;">You haven't login yet. Please login first. <br><br>
       <a href="{% url 'login' %}" class="btn btn-primary btn-block" style="background-color:#FBC95B; border: 0px; width:150px;">Login here</a></p>
     {% endif %}
         </div>
@@ -51,9 +51,16 @@
               <a href="{% url 'create-reply' post.id %}" class="btn btn-primary" id="create-reply-button">
             Create reply
           </a>
+            {% if user == post.user %}
             <a href="{% url 'delete-post' post.id %}" class="btn btn-primary" id="delete-post-button">
               Delete Post
             </a>
+            {% endif %}
+            {% if user == post.user %}
+              <a href="{% url 'edit-post' post.id %}" class="btn btn-primary" id="edit-post-button">
+                Edit Post
+              </a>
+            {% endif %}
           </div>
       </div>
     </div>

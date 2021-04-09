@@ -14,7 +14,8 @@
   </head>
   <body>
     {% if user.is_authenticated %}
-    <div style="color: black; width:50%; margin-left:50px;"> 
+    <div style="color: black; width:50%; margin-left:50px;">
+      <div class="list-group" id="profile">
       <h4 >User Dashboard</h4>
       <ul>
         <li>Account Role: {{ user.profile.user_type }} </li>
@@ -24,7 +25,8 @@
         <li>Email: {{ user.email }} </li>
         <li>Anonymity: {{ user.profile.anonymous }} </li>
       </ul>
-      <a class="btn btn-primary" href="{% url 'edit_profile' %}">Edit Profile</a>
+      </div>
+      <a class="btn btn-primary" href="{% url 'edit_profile' %}" style="background-color:#EA743F; border: 0px; width=50%; margin-left: 30px; margin-top:10px;">Edit Profile</a>
     </div>
     {% else %}
     <p style="color: black; width:50%; margin-left:50px; font-size: 16px;">You haven't login yet. Please login first. <br>
