@@ -40,6 +40,8 @@ Since we haven't made a 404 page for now, any wrong urls will direct to an error
 
 
 ## Walkthrough
+### Please note that UI of this release might be slightly different than examples shown below. 
+
 ### (Iteration 2 modified) Register an account
 Go to the register page: http://localhost:8000/users/register/
 Type in the username, email and password you desired. Restrictions are as follows: 
