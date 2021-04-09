@@ -132,6 +132,19 @@ class PostTests(TestCase):
         post1 = Post.objects.get(title='changed title')
         self.assertEqual(post1.details, 'changed details')
 
+        # Test if post is unable to be edited by non-owner
+        self.client.logout()
+        self.client.force_login(self.user2)
+        edit1 = self.client.post("/board/edit-post/3", {'title': 'changed title 2', 'details': 'changed details 2'})
+        try: 
+            post2 = Post.objects.get(title='changed title 2')
+            self.fail()
+        except Post.DoesNotExist:
+            post2 = Post.objects.get(title='something 2')
+            self.client.logout()
+            self.client.force_login(self.user)
+            self.assertEqual(post2.user, self.user)
+
     def test_post_deleted(self):
         response1 = self.client.post("/board/create-post", {'title': 'something 1', 'details': 'details 1'})
         response2 = self.client.post("/board/create-post", {'title': 'something 2', 'details': 'details 2'})
@@ -198,12 +211,25 @@ class ReplyTests(TestCase):
         self.assertFormError(response, 'form', 'details', 'This field is required.')
 
     def test_reply_edited(self):
-        response = self.client.post("/board/create-post", {'title': 'something', 'details': 'something 2'})
-        post = Post.objects.get(title='something')
-        reply = self.client.post("/board/create-reply/3", {'details': 'first reply'})
-        edit = self.client.post("/board/edit-reply/1", {'details': 'edited reply'})
-        reply_edited = Reply.objects.get(post=Post.objects.get(id=3))
-        self.assertEqual(reply_edited.details, 'edited reply')
+        # Test if reply is successfully edited
+        response1 = self.client.post("/board/create-post", {'title': 'something', 'details': 'something 2'})
+        response2 = self.client.post("/board/create-post", {'title': 'something 2', 'details': 'second test'})
+        reply1 = self.client.post("/board/create-reply/3", {'details': 'first reply'})
+        reply2 = self.client.post("/board/create-reply/4", {'details': 'second reply'})
+        edit1 = self.client.post("/board/edit-reply/1", {'details': 'edited reply'})
+        reply_edited_1 = Reply.objects.get(post=Post.objects.get(id=3))
+        self.assertEqual(reply_edited_1.details, 'edited reply')
+
+        # Test if post is unable to be edited by non-owner
+        self.client.logout()
+        self.client.force_login(self.user2)
+        try: 
+            edit2 = self.client.post("/board/edit-reply/2", {'details': 'edited reply'})
+            reply_edited_2 = Reply.objects.get(post=Post.objects.get(id=4))
+            self.assertEqual(reply_edited_2.details, 'edited reply')
+            self.fail()
+        except AssertionError:
+            self.assertEqual(reply_edited_2.details, 'second reply')
 
     def test_reply_deleted(self):
         # Test if reply is successfully deleted by user that owns reply
