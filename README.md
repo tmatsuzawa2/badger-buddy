@@ -138,7 +138,7 @@ Scroll down to the buttom, and you can see the post with your reply now. ~~Remem
 ### (Iteration 2 added) Edit and delete reply
 Click on the reply box. Now you can edit or delete your reply by clicking the corresponding button. Again, please feel free to change it according to your preferences. 
 
-![iteration_2_reply_edit](/readme_images/iteration_2_reply_edit.png)
+![iteration_2_reply_edit](/readme_images/iteration_2_edit_reply.png)
 
 ![iteration_2_reply_delete](/readme_images/iteration_2_reply_delete.png)
 
