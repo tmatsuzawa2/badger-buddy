@@ -1,0 +1,40 @@
+{% extends "../layout/base.html" %}
+{% include "style/bootstrap.html" %}
+{% load static %}
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+<!DOCTYPE html>
+<html lang="en">
+    {% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindfulness Exercises</title>
+</head>
+<body>
+{% if user.is_authenticated %}
+<div class="container">
+      <div class="row">
+        <div class="col">
+                <a class="list-group-item list-group-item-action flex-column align-items-start" id="exercise-style"  style="height:250px;">
+                <p> Inspirational Quote: </p>
+                <p>"{{quote.text}}" -{{quote.author}}</p>
+                </a>
+        </div>
+          <div class="col">
+                <a class="list-group-item list-group-item-action flex-column align-items-start" id="exercise-style" style="height:250px;">
+                <p> Journal Entry: </p>
+                <p>{{prompt.text}}</p>
+                </a>
+        </div>
+      </div>
+</div>
+{% else %}
+    <p style="color: black; width:50%; margin-left:50px; font-size: 16px;">You haven't login yet. Please login first. <br><br>
+      <a href="{% url 'login' %}" class="btn btn-primary btn-block" style="background-color:#FBC95B; border: 0px; width:150px;">Login here</a></p>
+{% endif %}
+</body>
+ {% endblock %}
+</html>

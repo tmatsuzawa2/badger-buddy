@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 # Login redirection
 LOGIN_REDIRECT_URL = '/board'
 REGISTRATION_OPEN = True
+ACCOUNT_ACTIVATION_DAYS = 1
 
 # Send email to the backend for password reset
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
@@ -94,18 +95,22 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
+]
+''' Not using the following validator under current progress
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
+    
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
-]
+'''
 
 PIPELINE_COMPILERS = (
   'react.utils.pipeline.JSXCompiler',

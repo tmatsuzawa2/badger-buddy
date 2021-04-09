@@ -36,6 +36,7 @@ class Post(models.Model):
     details = models.CharField(max_length=8192)
     create_date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    anonymous = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['-create_date']
@@ -61,6 +62,7 @@ class Reply(models.Model):
     details = models.CharField(max_length=1024)
     create_date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    anonymous = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['create_date']
@@ -87,18 +89,16 @@ class MeetingUsers(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
 
 
-class Activity(models.Model):
-    Prompt = 'Prompt'
-    Quote = 'Quote'
-    ROLE_CHOICES = (
-        (Prompt, 'Prompt'),
-        (Quote, 'Quote')
-    )
+class Quotes(models.Model):
+    text = models.TextField()
+    author = models.TextField()
 
-    type_id = models.TextField(choices=ROLE_CHOICES)
-    content = models.CharField(max_length=8192)
-
-    def __str__(self):
+    def str(self):
         return self.content
 
 
+class Prompts(models.Model):
+    text = models.TextField()
+
+    def str(self):
+        return self.content

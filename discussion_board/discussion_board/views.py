@@ -1,7 +1,9 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from ..models import Post, Reply
 from .forms import CreatePostForm, CreateReplyForm
+from django.views.generic.edit import UpdateView
+from django.urls import reverse
 
 # Create your views here.
 
@@ -55,3 +57,70 @@ def create_reply(request, post_id):
 
     return render(request, 'discussion_board/create-reply.html', context)
 
+
+def view_post(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    replies = Reply.objects.filter(post=post)
+    context = {
+        'replies': replies,
+        'post': post,
+    }
+
+    return render(request, 'discussion_board/view-post.html', context)
+
+
+def view_reply(request, reply_id):
+    reply = get_object_or_404(Reply, pk=reply_id)
+    context = {
+        'reply': reply
+    }
+    return render(request, 'discussion_board/view-reply.html', context)
+
+
+def delete_post(request, post_id):
+    context = {}
+    post = get_object_or_404(Post, id=post_id)
+    reply = Reply.objects.filter(post=post)
+    if request.user == post.user:
+        post.delete()
+        reply.delete()
+    else:
+        return HttpResponse('<h1>You are not authorized to delete</h1>')
+    return render(request, "discussion_board/delete-post.html", context)
+
+
+def delete_reply(request, reply_id):
+    reply = get_object_or_404(Reply, pk=reply_id)
+    if request.user == reply.user:
+        reply.delete()
+    else:
+        return HttpResponse('<h1>You are not authorized to delete</h1>')
+
+    context = {}
+    return render(request, 'discussion_board/delete-reply.html', context)
+
+class EditPost(UpdateView):
+    model = Post
+    fields = ['title', 'details']
+    template_name = 'discussion_board/edit-post.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user == self.get_object().user:
+            return super(EditPost, self).dispatch(request, *args, **kwargs)
+        return HttpResponse('<h1>You are not authorized to delete this post</h1>')
+
+    def get_success_url(self):
+        return '/board/view-post/' + str(self.object.id)
+
+class EditReply(UpdateView):
+    model = Reply
+    fields = ['details']
+    template_name = 'discussion_board/edit-reply.html'
+
+    def dispatch(self, request, *args, **kwargs):   
+        if request.user == self.get_object().user:
+            return super(EditReply, self).dispatch(request, *args, **kwargs)
+        return HttpResponse('<h1>You are not authorized to delete this reply</h1>')
+
+    def get_success_url(self):
+        return '/board/view-post/' + str(self.object.post.id)

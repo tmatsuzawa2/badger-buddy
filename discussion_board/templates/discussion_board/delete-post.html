@@ -1,0 +1,13 @@
+{% extends "../layout/base.html" %}
+{% include "style/bootstrap.html" %}
+{% load static %}
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+
+{% block content %}
+
+<p style="color: black; width:50%; margin-left:50px;">Post and replies deleted</p>
+<a href="/board" class="btn btn-primary btn-block" style="margin-left:50px; background-color:#68C8B5; border: 0px; width:350px;">Click here to go back to the home page</a></p>
+{% endblock %}
