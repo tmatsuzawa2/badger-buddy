@@ -1,0 +1,9 @@
+[run]
+source = .
+omit =
+   */badger-buddy-env/*
+   */discussion_board/migrations/*
+   badger_buddy/asgi.py
+   badger_buddy/wsgi.py
+   __init__.py
+   manage.py
