@@ -273,7 +273,6 @@ class AccountTest(TestCase):
         response = self.client.post("/users/register/", {'username': 'jthal007', 'password1': 'badgerBuddy123',
                                                          'password2': 'badgerBuddy123', 'email': 'fake@wisc.edu', 'first_name': 'Jake', 'last_name': 'Thalacker', 'user_type':'Student', 'anonymous':False})
         user = auth.get_user(self.client)
-        print(user)
         assert user.is_authenticated == False
 
     def test_login(self):
