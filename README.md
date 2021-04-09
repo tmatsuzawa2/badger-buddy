@@ -16,7 +16,7 @@ In this iteration, we have accomplished the following features:
 5. In your browser, redirect to http://localhost:8000/users/login/ to start the adventure!
 
 ## Testing
-18 Tests have been created (project_directory/discussion_board/test.py) to test implemented features. 
+22 Tests have been created (project_directory/discussion_board/test.py) to test implemented features. 
 Run tests: <code>python3 manage.py test</code> if you are using python3; <code>python manage.py test</code> if you are using python. 
 
 ## (Iteration 2 added) Code Coverage
