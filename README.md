@@ -35,8 +35,8 @@ Since we haven't made a 404 page for now, any wrong urls will direct to an error
 * Forget Password: http://localhost:8000/users/password_reset/
 * Post Dashboard (logged in required): http://localhost:8000/board/
 * Create Post (logged in required): http://localhost:8000/board/create-post/
-* Reply Post (logged in required): Click on the post to reply
 * Emergency help page **(Iteration 2 added: logged in required)**: http://localhost:8000/help/
+* **(Iteration 2 added)** Mindfulness exercise page (logged in required): http://localhost:8000/exercises/
 
 
 ## Walkthrough
