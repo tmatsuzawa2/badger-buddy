@@ -123,6 +123,28 @@ class PostTests(TestCase):
         post = Post.objects.get(title='something')
         self.assertEqual(post.user, self.user)
 
+    def test_post_edited(self):
+        response1 = self.client.post("/board/create-post", {'title': 'something 1', 'details': 'details 1'})
+        response2 = self.client.post("/board/create-post", {'title': 'something 2', 'details': 'details 2'})
+        
+        # Test if post is successfully edited
+        edit1 = self.client.post("/board/edit-post/2", {'title': 'changed title', 'details': 'changed details'})
+        post1 = Post.objects.get(title='changed title')
+        self.assertEqual(post1.details, 'changed details')
+
+        # Test if post is unable to be edited by non-owner
+        self.client.logout()
+        self.client.force_login(self.user2)
+        edit1 = self.client.post("/board/edit-post/3", {'title': 'changed title 2', 'details': 'changed details 2'})
+        try: 
+            post2 = Post.objects.get(title='changed title 2')
+            self.fail()
+        except Post.DoesNotExist:
+            post2 = Post.objects.get(title='something 2')
+            self.client.logout()
+            self.client.force_login(self.user)
+            self.assertEqual(post2.user, self.user)
+
     def test_post_deleted(self):
         response1 = self.client.post("/board/create-post", {'title': 'something 1', 'details': 'details 1'})
         response2 = self.client.post("/board/create-post", {'title': 'something 2', 'details': 'details 2'})
@@ -188,16 +210,37 @@ class ReplyTests(TestCase):
         response = self.client.post("/board/create-reply/1", {'details': ''})
         self.assertFormError(response, 'form', 'details', 'This field is required.')
 
+    def test_reply_edited(self):
+        # Test if reply is successfully edited
+        response1 = self.client.post("/board/create-post", {'title': 'something', 'details': 'something 2'})
+        response2 = self.client.post("/board/create-post", {'title': 'something 2', 'details': 'second test'})
+        reply1 = self.client.post("/board/create-reply/3", {'details': 'first reply'})
+        reply2 = self.client.post("/board/create-reply/4", {'details': 'second reply'})
+        edit1 = self.client.post("/board/edit-reply/1", {'details': 'edited reply'})
+        reply_edited_1 = Reply.objects.get(post=Post.objects.get(id=3))
+        self.assertEqual(reply_edited_1.details, 'edited reply')
+
+        # Test if post is unable to be edited by non-owner
+        self.client.logout()
+        self.client.force_login(self.user2)
+        try: 
+            edit2 = self.client.post("/board/edit-reply/2", {'details': 'edited reply'})
+            reply_edited_2 = Reply.objects.get(post=Post.objects.get(id=4))
+            self.assertEqual(reply_edited_2.details, 'edited reply')
+            self.fail()
+        except AssertionError:
+            self.assertEqual(reply_edited_2.details, 'second reply')
+
     def test_reply_deleted(self):
         # Test if reply is successfully deleted by user that owns reply
         response1 = self.client.post("/board/create-reply/2", {'details': 'first reply'})
         response2 = self.client.post("/board/create-reply/2", {'details': 'second reply'})
 
-        delete = self.client.delete("/board/delete-reply/2/2")
+        delete = self.client.delete("/board/delete-reply/2")
         try:
             reply2 = Reply.objects.get(post=Post.objects.get(id=2), details='second reply')
             self.fail()
-        except AssertionError:
+        except Reply.DoesNotExist:
             reply1 = Reply.objects.get(post=Post.objects.get(id=2), details='first reply')
             self.assertEqual(reply1.details, 'first reply')
 
@@ -205,8 +248,8 @@ class ReplyTests(TestCase):
         # Try deleting reply made by other user
         self.client.logout()
         self.client.force_login(self.user2)
-        delete = self.client.delete("/board/delete-reply/2/1")
-        reply_not_deleted = Reply.objects.get(post=Post.objects.get(id=2), details='first reply')
+        delete = self.client.delete("/board/delete-reply/1")
+        reply_not_deleted = Reply.objects.get(post=Post.objects.get(id=2))
         self.assertEqual(reply_not_deleted.details, 'first reply')
 
         # Log user back in
@@ -254,9 +297,9 @@ class AccountTest(TestCase):
 
     def test_register_login(self):
         response = self.client.post("/users/register/", {'username': 'jthal007', 'password1': 'badgerBuddy123',
-                                                         'password2': 'badgerBuddy123', 'email': 'fake@wisc.edu'})
+                                                         'password2': 'badgerBuddy123', 'email': 'fake@wisc.edu', 'first_name': 'Jake', 'last_name': 'Thalacker', 'user_type':'Student', 'anonymous':False})
         user = auth.get_user(self.client)
-        assert user.is_authenticated
+        assert user.is_active == False
 
     def test_login(self):
         # send login data
@@ -274,4 +317,3 @@ class AccountTest(TestCase):
         # should be logged out now
         user = auth.get_user(self.client)
         assert not user.is_authenticated
-
