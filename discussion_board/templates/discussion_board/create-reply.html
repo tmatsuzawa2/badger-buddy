@@ -6,14 +6,16 @@
 
 {% block content %}
 
-    <form action="" method="post" style="width:50%; margin-left:100px;" role="form">
+    <form action="" method="post" style="width:50%; margin-left:100px; color:white;" role="form">
       {% csrf_token %}
+        <div class="list-group" id="post">
       {{ form }}<br>
       <div class="form-group form-check">
         <input type="checkbox" class="form-check-input">
         <label class="form-check-label">Anonymous</label>
       </div>
-      <input type="submit" class="btn btn-primary" style="background-color:#FBC95B; border: 0px" value="Create Reply">
+        </div>
+      <input type="submit" class="btn btn-primary" style="background-color:#68C8B5; border: 0px; margin-top:10px;" value="Create Reply">
     </form>
 
 {% endblock %}
