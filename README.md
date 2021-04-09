@@ -24,7 +24,8 @@ For the code coverage, we used coverage.py, a helper tool for measuring code cov
 1. Download the package using <code>pip install coverage</code>
 2. Run the coverage using <code>coverage run manage.py test discussion_board</code>
 3. Display the report using <code>coverage report</code>
-4. If you want to see a html version of the report, you can <code>coverage html</code> that generate a folder named htmlcov and go to the index.html inside the folder. **We have the htmlcov folder included in the parent directory if you have any trouble installing the coverage package**
+4. If you want to see a html version of the report, you can <code>coverage html</code> that generate a folder named htmlcov and go to the index.html inside the folder. **We have the htmlcov folder included in the parent directory if you have any trouble installing the coverage package**  
+
 ![code_coverage](/readme_images/iteration_2_code_coverage.png)
 
 ## URLs
