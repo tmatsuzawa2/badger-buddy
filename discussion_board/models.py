@@ -36,6 +36,7 @@ class Post(models.Model):
     details = models.CharField(max_length=8192)
     create_date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    anonymous = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['-create_date']
@@ -61,6 +62,7 @@ class Reply(models.Model):
     details = models.CharField(max_length=1024)
     create_date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    anonymous = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['create_date']
