@@ -104,6 +104,11 @@ class EditPost(UpdateView):
     fields = ['title', 'details']
     template_name = 'discussion_board/edit-post.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user == self.get_object().user:
+            return super(EditPost, self).dispatch(request, *args, **kwargs)
+        return HttpResponse('<h1>You are not authorized to delete this post</h1>')
+
     def get_success_url(self):
         return '/board/view-post/' + str(self.object.id)
 
@@ -111,6 +116,11 @@ class EditReply(UpdateView):
     model = Reply
     fields = ['details']
     template_name = 'discussion_board/edit-reply.html'
+
+    def dispatch(self, request, *args, **kwargs):   
+        if request.user == self.get_object().user:
+            return super(EditReply, self).dispatch(request, *args, **kwargs)
+        return HttpResponse('<h1>You are not authorized to delete this reply</h1>')
 
     def get_success_url(self):
         return '/board/view-post/' + str(self.object.post.id)
