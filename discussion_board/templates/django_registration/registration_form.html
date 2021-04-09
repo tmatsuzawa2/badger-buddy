@@ -11,6 +11,7 @@
 
 <form method="post" action="{% url 'django_registration_register' %}" style="width:50%; margin-left:50px;" role="form">
   {% csrf_token %}
+   <div class="list-group" id="profile">
     <div class="form-group">
       <label for="username">{{form.username.label_tag}}</label>
       <input type="text" name="username" class="form-control" maxlength="128" required id="username" >
@@ -45,8 +46,8 @@
         <label class="form-check-label" for="anonymous">I don't want other users to view my personal information.</label>
       </div>
     </div>
-    
-    <input type="submit" class="btn btn-primary" style="background-color:#FBC95B; border: 0px" value="Register">
+   </div>
+    <input type="submit" class="btn btn-primary" style="background-color:#EA743F; border: 0px; margin-bottom:20px; margin-left: 30px; margin-top: 10px;" value="Register">
 </form>
 
 <a href="{% url 'login' %}" style="color: black; width:50%; margin-left:50px; font-size: 16px;">Already have an account? Login here</a>
