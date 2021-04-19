@@ -19,7 +19,7 @@
         <label for="details">{{form.details.label_tag}}</label>
         <input type="text" name = "details" class="form-control" maxlength="8192" required id="details" >
       </div>
-        <div class="form-group">
+      <div class="form-group">
         <label>Post Tags</label>
         <select multiple class="form-control">
           <option>Anxiety</option>
@@ -28,8 +28,8 @@
         </select>
       </div>
       <div class="form-group form-check">
-        <input type="checkbox" class="form-check-input">
-        <label class="form-check-label">Anonymous</label>
+        <label for="anonymous" class="form-check-label">Anonymous</label>
+        <input type="checkbox" name="anonymous" class="form-check-input" id="anonymous">
       </div>
       </div>
       <input type="submit" class="btn btn-primary" style="background-color:#68C8B5; border: 0px; margin-top:10px;" value="Create Post">

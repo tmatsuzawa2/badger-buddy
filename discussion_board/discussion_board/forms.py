@@ -9,6 +9,7 @@ class CreatePostForm(forms.Form):
     details = forms.CharField(label='Details',
                             max_length=8192,
                             widget=forms.TextInput(attrs={'class': 'form-control'}))
+    anonymous = forms.BooleanField(label='Anonymous')
 
     def check_title_details(self):
         title = self.cleaned_data['title']
@@ -22,6 +23,7 @@ class CreateReplyForm(forms.Form):
     details = forms.CharField(label='Details',
                             max_length=1024,
                             widget=forms.TextInput(attrs={'class': 'form-control'}))
+    anonymous = forms.BooleanField(label='Anonymous')
 
     def check_details(self):
         details = self.cleaned_data['details']

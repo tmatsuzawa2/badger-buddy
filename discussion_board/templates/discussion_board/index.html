@@ -25,7 +25,7 @@
               <h5 class="mb-1">{{ post.title }}</h5>
               <small> {{ post.create_date }} </small>
             </div>
-            <small> Posted By: {{ post.user.username }} </small>
+            <small> Posted By: {{ post.display_user }} </small>
           </a>
         </div>
         {% endfor %}

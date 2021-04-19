@@ -44,6 +44,12 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def display_user(self):
+        if self.anonymous:
+            return "Anonymous"
+        else:
+            return self.user.username
+
 
 class Tags(models.Model):
     title = models.CharField(max_length=128)
@@ -66,13 +72,19 @@ class Reply(models.Model):
 
     class Meta:
         ordering = ['create_date']
+
+    def display_user(self):
+        if self.anonymous:
+            return "Anonymous"
+        else:
+            return self.user.username
         
     # What's a good __str__ function for Reply?
     def __str__(self):
         if self.user.profile.anonymous:
             return 'Comment {} by Anonymous at {}'.format(self.details, self.create_date)
         else:
-            return 'Comment {} by {} at {}'.format(self.details, self.user.username, self.create_date)
+            return 'Comment {} by {} at {}'.format(self.details, self.display_user(), self.create_date)
 
 
 class Meeting(models.Model):

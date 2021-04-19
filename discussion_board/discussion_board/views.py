@@ -22,7 +22,8 @@ def create_post(request):
         if form.is_valid():
             title = form.cleaned_data['title']
             details = form.cleaned_data['details']
-            p = Post(title=title, details=details, user=request.user)
+            anonymous = form.cleaned_data['anonymous']
+            p = Post(title=title, details=details, anonymous=anonymous, user=request.user)
             # if want anonmyity, request.user.profile.anonymous
             p.save()
             return HttpResponseRedirect('/board')
@@ -43,7 +44,8 @@ def create_reply(request, post_id):
         form = CreateReplyForm(request.POST)
         if form.is_valid():
             details = form.cleaned_data['details']
-            r = Reply(post=post, details=details, user=request.user)
+            anonymous = form.cleaned_data['anonymous']
+            r = Reply(post=post, details=details, anonymous=anonymous, user=request.user)
             r.save()
             return HttpResponseRedirect('/board')
 
@@ -101,26 +103,26 @@ def delete_reply(request, reply_id):
 
 class EditPost(UpdateView):
     model = Post
-    fields = ['title', 'details']
+    fields = ['title', 'details', 'anonymous']
     template_name = 'discussion_board/edit-post.html'
 
     def dispatch(self, request, *args, **kwargs):
         if request.user == self.get_object().user:
             return super(EditPost, self).dispatch(request, *args, **kwargs)
-        return HttpResponse('<h1>You are not authorized to delete this post</h1>')
+        return HttpResponse('<h1>You are not authorized to edit this post</h1>')
 
     def get_success_url(self):
         return '/board/view-post/' + str(self.object.id)
 
 class EditReply(UpdateView):
     model = Reply
-    fields = ['details']
+    fields = ['details', 'anonymous']
     template_name = 'discussion_board/edit-reply.html'
 
     def dispatch(self, request, *args, **kwargs):   
         if request.user == self.get_object().user:
             return super(EditReply, self).dispatch(request, *args, **kwargs)
-        return HttpResponse('<h1>You are not authorized to delete this reply</h1>')
+        return HttpResponse('<h1>You are not authorized to edit this reply</h1>')
 
     def get_success_url(self):
         return '/board/view-post/' + str(self.object.post.id)

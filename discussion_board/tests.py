@@ -104,7 +104,7 @@ class PostTests(TestCase):
         self.client.force_login(self.user)
 
     def test_form_valid(self):
-        form_data = {'title': 'Lonely', 'details': 'I am lonely'}
+        form_data = {'title': 'Lonely', 'details': 'I am lonely', 'anonymous': True}
         form = CreatePostForm(data=form_data)
         self.assertTrue(form.is_valid())
 
@@ -202,7 +202,7 @@ class ReplyTests(TestCase):
         self.client.force_login(self.user)
 
     def test_reply_form_valid(self):
-        form_data = {'details': 'I am lonely'}
+        form_data = {'details': 'I am lonely', 'anonymous': True}
         form = CreateReplyForm(data=form_data)
         self.assertTrue(form.is_valid())
 
