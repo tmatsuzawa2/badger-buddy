@@ -317,3 +317,57 @@ class AccountTest(TestCase):
         # should be logged out now
         user = auth.get_user(self.client)
         assert not user.is_authenticated
+
+    def test_wisc_email_1(self):
+        # register with not a email format
+        response = self.client.post("/users/register/", {'username': 'jthal007', 'password1': 'badgerBuddy123',
+                                                         'password2': 'badgerBuddy123', 'email': 'fake', 'first_name': 'Jake', 'last_name': 'Thalacker', 'user_type':'Student', 'anonymous':False})
+        # should return a status_code of 200 and no url attribute
+        self.assertNotEqual(response.status_code, 302)
+
+    def test_wisc_email_2(self):
+        # register with a gmail email format
+        response = self.client.post("/users/register/", {'username': 'jthal007', 'password1': 'badgerBuddy123',
+                                                         'password2': 'badgerBuddy123', 'email': 'fake@gmail.com', 'first_name': 'Jake', 'last_name': 'Thalacker', 'user_type':'Student', 'anonymous':False})
+        # should return a status_code of 200 and no url attribute
+        self.assertNotEqual(response.status_code, 302)
+
+    def test_wisc_email_3(self):
+        # register with a wisc email format
+        response = self.client.post("/users/register/", {'username': 'jthal007', 'password1': 'badgerBuddy123',
+                                                         'password2': 'badgerBuddy123', 'email': 'fake@wisc.edu', 'first_name': 'Jake', 'last_name': 'Thalacker', 'user_type':'Student', 'anonymous':False})
+        print(response)
+        # should return a status_code of 302 and redirection url
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, '/users/register/complete/')
+
+    def test_wisc_email_4(self):
+        # register with a wisc department format
+        response = self.client.post("/users/register/", {'username': 'jthal007', 'password1': 'badgerBuddy123',
+                                                         'password2': 'badgerBuddy123', 'email': 'fake@cs.wisc.edu', 'first_name': 'Jake', 'last_name': 'Thalacker', 'user_type':'Student', 'anonymous':False})
+        print(response)
+        # should return a status_code of 302 and redirection url
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, '/users/register/complete/')
+
+    def test_edit_profile(self):
+        # Login
+        response = self.client.post('/users/login/', {'username': 'jthal7', 'password': 'badgerBuddy'}, follow=True)
+        # Edit the username, first name and last name
+        response = self.client.post('/profile/edit/', {'username': 'Changed_username', 'first_name': 'Jake',
+                                                       'last_name': 'thalacker', 'anonymity': 'True',
+                                                       'email': 'fake@wisc.edu'}, follow=True)
+        # Username should be changed now
+        user = User.objects.get(username='Changed_username')
+        self.assertEqual(user.first_name, "Jake")
+
+    def test_edit_profile_already_existed(self):
+        # Login
+        response = self.client.post('/users/login/', {'username': 'jthal7', 'password': 'badgerBuddy'}, follow=True)
+        # Edit the username and user information, but change to a username that already existed in the database
+        response = self.client.post('/profile/edit/', {'username': 'jthal', 'first_name': 'Jake',
+                                                       'last_name': 'thalacker', 'anonymity': 'True',
+                                                       'email': 'fake@wisc.edu'}, follow=True)
+        # Nothing should be changed since it should not pass the validator
+        user = User.objects.get(username='jthal')
+        self.assertEqual(user.first_name, "jake")
