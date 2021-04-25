@@ -1,15 +1,18 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from .forms import EditProfileForm
+from ..models import Post, Reply
 from django.http import HttpResponseRedirect
 
 # Create your views here.
+
 
 def index(request):
     context = {
         'user': request.user
     }
     return render(request, 'users/index.html', context)
+
 
 def edit_profile(request):
     if request.method == 'POST':
@@ -34,3 +37,25 @@ def edit_profile(request):
         'user': request.user
     }
     return render(request, 'users/edit_profile.html', context)
+
+
+def post_history(request):
+    user = request.user
+    posts = Post.objects.filter(user=user)
+    print(posts)
+    replies = Reply.objects.all()
+    context = {
+        'posts': posts,
+        'replies': replies
+    }
+    return render(request, 'users/post_history.html', context)
+
+
+def reply_history(request):
+    user = request.user
+    replies = Reply.objects.filter(user=user)
+    context = {
+        'replies': replies
+    }
+    return render(request, 'users/reply_history.html', context)
+

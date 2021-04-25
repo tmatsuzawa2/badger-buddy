@@ -1,0 +1,36 @@
+{% extends "../layout/base.html" %}
+{% include "style/bootstrap.html" %}
+{% load static %}
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+<!DOCTYPE html>
+<html>
+  {% block content %}
+  <head>
+    <meta charset="utf-8" />
+    <title>User Dashboard</title>
+  </head>
+  <body>
+    {% if user.is_authenticated %}
+    <div style="color: black; width:50%; margin-left:50px;">
+        {% for post in posts %}
+        <div class="list-group" id="post">
+          <a href="{% url 'view-post' post.id %}" class="list-group-item list-group-item-action flex-column align-items-start" id="inner-post">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ post.title }}</h5>
+              <small> {{ post.create_date }} </small>
+            </div>
+            <small> Posted By: {{ post.user.username }} </small>
+          </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p style="color: black; width:50%; margin-left:50px; font-size: 16px;">You haven't login yet. Please login first. <br>
+      <a href="{% url 'login' %}" class="btn btn-primary btn-block" style="background-color:#FBC95B; border: 0px; width:150px;">Login here</a></p>
+    {% endif %}
+  </body>
+  {% endblock %}
+</html>
