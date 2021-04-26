@@ -84,7 +84,6 @@ class EditProfileForm(forms.Form):
     def clean_username(self):
         username = self.cleaned_data.get("username")
         email = self.cleaned_data.get("email")
-        print(email)
         #if User.objects.filter(username__iexact=username).exclude(email__iexact=email).exists():
         #    raise ValidationError("The username has already been taken.")
             
