@@ -145,7 +145,7 @@ class PostTests(TestCase):
             self.client.force_login(self.user)
             self.assertEqual(post2.user, self.user)
 
-    def test_vew_post(self):
+    def test_view_post(self):
         # Login
         self.client.force_login(self.user2)
         # Create post and go to post history page
@@ -153,6 +153,14 @@ class PostTests(TestCase):
         response = self.client.get("/profile/post_history/")
         # Check if the html response contains the post
         self.assertTrue("sometitle" in response.content.decode("utf-8"))
+
+    def test_anonymous_post(self):
+        # Create reply
+        response = self.client.post("/board/create-post", {'title': 'sometitle', 'details': 'somedetails', 'anonymous': 'True'})
+        # View the post
+        response = self.client.get("/board/view-post/2")
+        # Check if the name is hidden
+        self.assertTrue("Posted By: Anonymous" in response.content.decode("utf-8"))
 
     def test_post_deleted(self):
         response1 = self.client.post("/board/create-post", {'title': 'something 1', 'details': 'details 1'})
@@ -285,10 +293,16 @@ class ReplyTests(TestCase):
         except ValueError:
             pass
 
-    def test_vew_reply(self):
-        # Login
-        self.client.force_login(self.user2)
-        # Create reply and go to reply history page
+    def test_anonymous_reply(self):
+        # Create reply
+        response = self.client.post("/board/create-reply/1", {'details': 'somereply', 'anonymous': 'True'})
+        # View the reply
+        response = self.client.get("/board/view-reply/1")
+        # Check if the name is hidden
+        self.assertTrue("Posted By: Anonymous" in response.content.decode("utf-8"))
+
+    def test_view_reply(self):
+        # Create reply
         response = self.client.post("/board/create-reply/1", {'details': 'somereply'})
         response = self.client.get("/profile/reply_history/")
         # Check if the html response contains the details
