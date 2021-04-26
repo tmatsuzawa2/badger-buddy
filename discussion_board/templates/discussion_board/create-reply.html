@@ -10,10 +10,12 @@
       {% csrf_token %}
         <div class="list-group" id="post">
       {{ form }}<br>
+      {% comment %}
       <div class="form-group form-check">
         <input type="checkbox" class="form-check-input">
         <label class="form-check-label">Anonymous</label>
       </div>
+      {% endcomment %}
         </div>
       <input type="submit" class="btn btn-primary" style="background-color:#68C8B5; border: 0px; margin-top:10px;" value="Create Reply">
     </form>
