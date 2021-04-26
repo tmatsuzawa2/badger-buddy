@@ -50,6 +50,12 @@ class Post(models.Model):
         else:
             return self.user.username
 
+    def super_display_user(self):
+        display_name = self.user.username
+        if self.anonymous:
+            display_name  += " (Anonymous to other students)"
+        return display_name 
+
 
 class Tags(models.Model):
     title = models.CharField(max_length=128)
@@ -78,6 +84,12 @@ class Reply(models.Model):
             return "Anonymous"
         else:
             return self.user.username
+    
+    def super_display_user(self):
+        display_name = self.user.username
+        if self.anonymous:
+            display_name  += " (Anonymous to other students)"
+        return display_name 
         
     # What's a good __str__ function for Reply?
     def __str__(self):

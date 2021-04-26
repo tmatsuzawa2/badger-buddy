@@ -25,7 +25,11 @@
                   <small> {{ post.create_date }} </small>
                 </div>
                 <p>{{post.details}}</p>
-                <small> Posted By: {{ post.display_user }} </small>
+                {% if user == post.user %}
+                  <small> Posted By: {{ post.super_display_user }} </small>
+                {% else %}
+                  <small> Posted By: {{ post.display_user }} </small>
+                {% endif %}
               </a>
             </div>
             {% if replies %}
@@ -34,7 +38,13 @@
                         <a href="{% url 'view-reply' reply.id %}" class="list-group-item list-group-item-action flex-column align-items-start" id="inner-reply">
                         <p id="reply-details">{{reply.details}}</p>
                         <div class="d-flex w-100 justify-content-between">
-                          <h8 class="mb-1"><small> Posted By: {{ reply.display_user }} </small></h8>
+                          <h8 class="mb-1">
+                            {% if user == reply.user %}
+                              <small> Posted By: {{ reply.super_display_user }} </small>
+                            {% else %}
+                              <small> Posted By: {{ reply.display_user }} </small>
+                            {% endif %}
+                          </h8>
                           <small> {{ reply.create_date }} </small>
                         </div>
 
