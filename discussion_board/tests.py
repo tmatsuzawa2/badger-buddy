@@ -145,6 +145,15 @@ class PostTests(TestCase):
             self.client.force_login(self.user)
             self.assertEqual(post2.user, self.user)
 
+    def test_vew_post(self):
+        # Login
+        self.client.force_login(self.user2)
+        # Create post and go to post history page
+        response = self.client.post("/board/create-post", {'title': 'sometitle', 'details': 'somedetails'})
+        response = self.client.get("/profile/post_history/")
+        # Check if the html response contains the post
+        self.assertTrue("sometitle" in response.content.decode("utf-8"))
+
     def test_post_deleted(self):
         response1 = self.client.post("/board/create-post", {'title': 'something 1', 'details': 'details 1'})
         response2 = self.client.post("/board/create-post", {'title': 'something 2', 'details': 'details 2'})
@@ -276,6 +285,14 @@ class ReplyTests(TestCase):
         except ValueError:
             pass
 
+    def test_vew_reply(self):
+        # Login
+        self.client.force_login(self.user2)
+        # Create reply and go to reply history page
+        response = self.client.post("/board/create-reply/1", {'details': 'somereply'})
+        response = self.client.get("/profile/reply_history/")
+        # Check if the html response contains the details
+        self.assertTrue("somereply" in response.content.decode("utf-8"))
 
 class AccountTest(TestCase):
     def setUp(self):
@@ -348,7 +365,16 @@ class AccountTest(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, '/users/register/complete/')
 
-    def test_edit_profile(self):
+    def test_view_profile(self):
+        # Login
+        self.user2 = User.objects.get(username="jthal7")
+        self.client.force_login(self.user2)
+        # Check if the profile page display the correct info
+        response = self.client.post('/profile/view/')
+        self.assertTrue("jthal7" in response.content.decode("utf-8"))
+        self.assertTrue("jakethalacker7@gmail.com" in response.content.decode("utf-8"))
+
+    def test_edit_profile_1(self):
         # Login
         response = self.client.post('/users/login/', {'username': 'jthal7', 'password': 'badgerBuddy'}, follow=True)
         # Edit the username, first name and last name
@@ -358,6 +384,15 @@ class AccountTest(TestCase):
         # Username should be changed now
         user = User.objects.get(username='Changed_username')
         self.assertEqual(user.first_name, "Jake")
+
+    def test_edit_profile_2(self):
+        # Login
+        self.user2 = User.objects.get(username="jthal7")
+        self.client.force_login(self.user2)
+        # Check if it still works if we use GET request
+        response = self.client.get('/profile/edit/')
+        # It should not work, status code as 200
+        self.assertEqual(response.status_code, 200)
 
     def test_edit_profile_already_existed(self):
         # Login
@@ -369,6 +404,7 @@ class AccountTest(TestCase):
         # Nothing should be changed since it should not pass the validator
         user = User.objects.get(username='jthal')
         self.assertEqual(user.first_name, "jake")
+
 
 class HelpExerciseTest(TestCase):
     def setUp(self):
