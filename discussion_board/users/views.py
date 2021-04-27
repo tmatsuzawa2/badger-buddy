@@ -42,11 +42,8 @@ def edit_profile(request):
 def post_history(request):
     user = request.user
     posts = Post.objects.filter(user=user)
-    print(posts)
-    replies = Reply.objects.all()
     context = {
         'posts': posts,
-        'replies': replies
     }
     return render(request, 'users/post_history.html', context)
 
