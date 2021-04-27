@@ -466,6 +466,14 @@ class HelpExerciseTest(TestCase):
         # If the author is null, then automatically set to anonymous
         response = self.client.post('/exercises/')
         self.assertTrue("-Anonymous" in response.content.decode("utf-8"))
+        
+    def test_breathe_exercise(self):
+        # Login
+        response = self.client.post('/users/login/', {'username': 'jthal7', 'password': 'badgerBuddy'}, follow=True)
+        # If the author is null, then automatically set to anonymous
+        response = self.client.post('/exercises/')
+        # Check if the breathe.gif is displayed
+        self.assertTrue("breathe.gif" in response.content.decode("utf-8"))
 
 class Handle404Tests(TestCase):
     def test_handler_renders_template_response(self):
