@@ -1,0 +1,22 @@
+{% extends "../layout/base.html" %}
+{% include "style/bootstrap.html" %}
+{% load static %}
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+<!DOCTYPE html>
+<html>
+  {% block content %}
+  <head>
+    <meta charset="utf-8" />
+    <title>Page Not Found</title>
+  </head>
+  <body>
+    <p>404: Page Not Found</p>
+    <a href="/board/" class="btn btn-primary btn-block">
+      Go to home page
+    </a>
+  </body>
+  {% endblock %}
+</html>
