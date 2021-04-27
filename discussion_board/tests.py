@@ -160,7 +160,7 @@ class PostTests(TestCase):
         # View the post
         response = self.client.get("/board/view-post/2")
         # Check if the name is hidden
-        self.assertTrue("Posted By: Anonymous" in response.content.decode("utf-8"))
+        self.assertTrue("Anonymous" in response.content.decode("utf-8"))
 
     def test_post_deleted(self):
         response1 = self.client.post("/board/create-post", {'title': 'something 1', 'details': 'details 1'})
@@ -299,7 +299,7 @@ class ReplyTests(TestCase):
         # View the reply
         response = self.client.get("/board/view-reply/1")
         # Check if the name is hidden
-        self.assertTrue("Posted By: Anonymous" in response.content.decode("utf-8"))
+        self.assertTrue("Anonymous" in response.content.decode("utf-8"))
 
     def test_view_reply(self):
         # Create reply
