@@ -26,6 +26,8 @@
         <li>Anonymity: {{ user.profile.anonymous }} </li>
       </ul>
       </div>
+      <a class="btn btn-primary" href="{% url 'posts_profile' %}" style="background-color:#EA743F; border: 0px; width=50%; margin-left: 30px; margin-top:10px;">View User Posts</a>
+      <a class="btn btn-primary" href="{% url 'reply_profile' %}" style="background-color:#EA743F; border: 0px; width=50%; margin-left: 30px; margin-top:10px;">View User Replies</a>
       <a class="btn btn-primary" href="{% url 'edit_profile' %}" style="background-color:#EA743F; border: 0px; width=50%; margin-left: 30px; margin-top:10px;">Edit Profile</a>
     </div>
     {% else %}
