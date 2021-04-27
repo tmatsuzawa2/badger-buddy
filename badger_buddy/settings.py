@@ -25,7 +25,7 @@ SECRET_KEY = '@qktco1#5--x=)=)golvow_sh6_r^80656p&6h4t-2_jevs=p2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]']
 
 # Login redirection
 LOGIN_REDIRECT_URL = '/board'
