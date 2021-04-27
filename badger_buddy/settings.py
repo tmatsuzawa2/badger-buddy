@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '@qktco1#5--x=)=)golvow_sh6_r^80656p&6h4t-2_jevs=p2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]']
+ALLOWED_HOSTS = []
 
 # Login redirection
 LOGIN_REDIRECT_URL = '/board'
