@@ -15,7 +15,7 @@
   <body>
     {% if user.is_authenticated %}
     <div class="container">
-      <div class="row">
+      <div class="row" id="post-spacing">
         <div class="col">
             <div class="list-group" id="reply">
                 <a href="" class="list-group-item list-group-item-action flex-column align-items-start" id="inner-reply">
@@ -33,7 +33,7 @@
         </div>
            <div class = 'col'>
                {% if user == reply.user %}
-               <a href="{% url 'delete-reply' reply.id %}" class="btn btn-primary" id="delete-reply-button">
+               <a href="{% url 'delete-reply' reply.id %}" class="btn btn-primary" id="delete-reply-button" onclick="return confirm('Are you sure you want to delete this item?');">
                     Delete Reply
                </a>
                {% endif %}
