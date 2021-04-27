@@ -42,6 +42,7 @@ def edit_profile(request):
 def post_history(request):
     user = request.user
     posts = Post.objects.filter(user=user)
+    replies = Reply.objects.all()
     context = {
         'posts': posts,
     }
