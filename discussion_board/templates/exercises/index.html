@@ -16,19 +16,23 @@
 <body>
 {% if user.is_authenticated %}
 <div class="container">
-      <div class="row">
+      <div class="row"  id="post-spacing">
         <div class="col">
-                <a class="list-group-item list-group-item-action flex-column align-items-start" id="exercise-style"  style="height:250px;">
+                <a class="list-group-item list-group-item-action flex-column align-items-start" id="exercise-style"  style="height:auto;">
                 <p> Inspirational Quote: </p>
                 <p>"{{quote.text}}" -{{quote.author}}</p>
                 </a>
         </div>
           <div class="col">
-                <a class="list-group-item list-group-item-action flex-column align-items-start" id="exercise-style" style="height:250px;">
+              <img src="{% static 'images/breathe.gif' %}" id="breathe">
+          </div>
+          <div class="col">
+                <a class="list-group-item list-group-item-action flex-column align-items-start" id="exercise-style" style="height:auto;">
                 <p> Journal Entry: </p>
                 <p>{{prompt.text}}</p>
                 </a>
         </div>
+
       </div>
 </div>
 {% else %}
