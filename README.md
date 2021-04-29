@@ -1,56 +1,59 @@
-# Badger Buddy Iteration 2
-Hi Siyang! Glad we meet here again!
+# Badger Buddy Final Demo
+Hello there! It has been a great semester and thank you so much for your helps!
 
-In this iteration, we have accomplished the following features: 
-* Account management, Refinements on account registration
-* Individual post pages, Delete posts and replies, Edit posts and replies
-* More major UI improvements
+Badger Buddy is a webpage that desires to help UW students with mental difficulties and create a platform for them to communicate.
+Until iteration 3, we have accomplished the following features: 
+* Account creation and management
+* Forum board: create posts, reply to individual post, edit and delete posts and replies
+* Forum board: anonymity options for posts and replies
+* Forum board: search post based on names
+* 404 Pages
+* Major UI improvements
 
 ## Setup
-1. Download the iteration 2 release
+1. Download the Final demo release
 2. Install and create a virtual environment (commands may vary depend on OS): https://docs.python.org/3/tutorial/venv.html 
 3. Open the virtual environment and install following packages:
    * Django: <code>pip install django</code>
    * Django-registration: <code>pip install django-registration</code>
-4. Inside the virtual environment, run the surver <code>python3 manage.py runserver</code> if you are using python3; <code>python manage.py runserver</code> if you are using python.
+4. Inside the virtual environment, run the surver <code>python3 manage.py runserver --insecure</code> if you are using python3; <code>python manage.py runserver --insecure</code> if you are using python. <br/> **Please note that we have changed the command because we have to be out of debug mode in order to achieve 404 page, and in that case the server won't load the local static files (e.g. images) unless the "--insecure" tag is turned on.**
 5. In your browser, redirect to http://localhost:8000/users/login/ to start the adventure!
 
 ## Testing
-22 Tests have been created (project_directory/discussion_board/test.py) to test implemented features. 
+40 Tests have been created (project_directory/discussion_board/test.py) to test implemented features. 
 Run tests: <code>python3 manage.py test</code> if you are using python3; <code>python manage.py test</code> if you are using python. 
 
-## (Iteration 2 added) Code Coverage
+## Code Coverage
 For the code coverage, we used coverage.py, a helper tool for measuring code coverage of Python programs. It allows us to run through tests and present the statement coverage of each individual file we have implemented.
 1. Download the package using <code>pip install coverage</code>
 2. Run the coverage using <code>coverage run manage.py test discussion_board</code>
 3. Display the report using <code>coverage report</code>
 4. If you want to see a html version of the report, you can <code>coverage html</code> that generate a folder named htmlcov and go to the index.html inside the folder. **We have the htmlcov folder included in the parent directory if you have any trouble installing the coverage package**  
 
-![code_coverage](/readme_images/iteration_2_code_coverage.png)
+![code_coverage](/readme_images/iteration_3_code_coverage.png)
 
 ## URLs
-Since we haven't made a 404 page for now, any wrong urls will direct to an error message.
 * Login: http://localhost:8000/users/login/
 * Register: http://localhost:8000/users/register/
 * Forget Password: http://localhost:8000/users/password_reset/
 * Post Dashboard (logged in required): http://localhost:8000/board/
 * Create Post (logged in required): http://localhost:8000/board/create-post/
-* Emergency help page **(Iteration 2 added: logged in required)**: http://localhost:8000/help/
-* **(Iteration 2 added)** Mindfulness exercise page (logged in required): http://localhost:8000/exercises/
+* Emergency help page (logged in required): http://localhost:8000/help/
+* Mindfulness exercise page (logged in required): http://localhost:8000/exercises/
 
 
 ## Walkthrough
 ### Please note that UI of this release are different than examples shown below, but the features are identical. 
 
-### (Iteration 2 modified) Register an account
+### Register an account
 Go to the register page: http://localhost:8000/users/register/
 Type in the username, email and password you desired. Restrictions are as follows: 
 * Username (Required): 50 characters or fewer. Letters, digits and @/./+/-/_ only.
-* **(Iteration 2 modified) Email (Required)**: Email format, **restrict to wisc email now**
-* **(Iteration 2 added) User type (Required)**: Type of the account, could be either Student or Overseer, user type makes no difference for now.   
-* **(Iteration 2 added) Anonymity (Required)**: Whether your first and last name will be shown to public in your posts
-* **(Iteration 2 added) First and Last name (Required)**: 3-15 characters. Letters only.
-* **(Iteration 2 modified) Password (Required)**:
+* Email (Required): Email format, **restrict to wisc email**
+* User type (Required): Type of the account, could be either Student or Overseer, user type makes no difference for now.   
+* Anonymity (Required): Whether your first and last name will be shown to public in your posts
+* First and Last name (Required): 3-15 characters. Letters only.
+* Password (Required):
   * **Compared to four restrictions before, now we only have one for easier user inputs.**
   * Your password must contain at least 8 characters.
 
@@ -60,7 +63,7 @@ In our walkthrough, we will set our username as "badgerbuddy", email as "badger.
 
 ![iteration_2_register_2](/readme_images/iteration_2_register_2.png)
 
-### (Iteration 2 added) Verification Email
+### Verification Email
 We added an additional step for registration in this iteration so your account is currently in the database yet not active. A success page will show up and remind you to check your email inbox for the verification email. 
 
 ![iteration_2_register_complete](/readme_images/iteration_2_complete.png)
@@ -90,7 +93,7 @@ Please note that the url from the example above may not be valid in your attempt
 
 ![iteration_1_login](/readme_images/iteration_1_login.png)
 
-### (Iteration 2 added) User Dashboard and Edit Profile
+### User Dashboard and Edit Profile
 
 If you click on the "User Dashboard" tab on the navigation bar, you will be at the user dashboard page. You can change your user information (username, first and last name and anoynmity) by clicking the "Edit Profile" button. Feel free to change whatever you prefer, yet in this walkthrough we will keep everything the same.
 
@@ -98,14 +101,14 @@ If you click on the "User Dashboard" tab on the navigation bar, you will be at t
 
 ![iteration_2_edit_profile](/readme_images/iteration_2_edit_profile.png)
 
-### Post Dashboard (Iteration 2 modified) and Create Post
+### Post Dashboard and Create Post
 
 Click on the logo or "Post Dashboard" on the navigation bar will redirect you to the post dashboard. As you can see, we have created four posts for testing purposes, and posts are ordered from the latest to the oldest. Click on the "Create Post" button to create another one.
 
 
 ![iteration_2_board](/readme_images/iteration_2_board.png)
 
-This will lead you to the create post page. In our example: we will enter "Hello World" in the title field, and "Goodnight World" in the detail field. Note that tags and anonymity doesn't do anything. Click on "Create Post" to create the post.
+This will lead you to the create post page. In our example: we will enter "Hello World" in the title field, and "Goodnight World" in the detail field. Click on "Create Post" to create the post.
 
 ![iteration_2_post_create](/readme_images/iteration_2_post_create.png)
 
@@ -114,12 +117,12 @@ You will see your post at the top now!
 ![iteration_2_board_2](/readme_images/iteration_2_board_2.png)
 **Please note that on the front page you will not able to see the content anymore.**
 
-### (Iteration 2 added) View individual posts
+### View individual posts
 When you click on your post, you will be able to see your post content "Goodnight World". If someone replied your post, you will see the reply content at below. 
 
 ![iteration_2_board_3](/readme_images/iteration_2_board_3.png)
 
-### (Iteration 2 added) Edit and delete post
+### Edit and delete post
 Now you can edit or delete your post by clicking the corresponding button. Feel free to change it according to your preferences, yet in this walkthrough we will not edit or delete it. 
 
 ![iteration_2_post_edit](/readme_images/iteration_2_edit_post.png)
@@ -133,24 +136,24 @@ We can enter what we want to say, such as "I believe you, you can get through it
 
 ![iteration_1_reply](/readme_images/iteration_1_reply.png)
 
-Scroll down to the buttom, and you can see the post with your reply now. ~~Remember the user was set to Anonymous as default? The comment you posted will not reveal your username.~~ (A bug that still has not been fixed).
+Scroll down to the buttom, and you can see the post with your reply now.
 
 ![iteration_2_board_4](/readme_images/iteration_2_board_4.png)
 
-### (Iteration 2 added) Edit and delete reply
+### Edit and delete reply
 Click on the reply box. Now you can edit or delete your reply by clicking the corresponding button. Again, please feel free to change it according to your preferences. 
 
 ![iteration_2_reply_edit](/readme_images/iteration_2_edit_reply.png)
 
 ![iteration_2_reply_delete](/readme_images/iteration_2_reply_delete.png)
 
-### (Iteration 2 modified) Resource and Help Page
+### Resource and Help Page
 
 On the navigation bar at the top, click on the "Resource" to Emergency help page. The page lists contact information that user can get direct mental help from. 
 
 ![iteration_2_help](/readme_images/iteration_2_help.png)
 
-### (Iteration 2 added) Mindfulness Exercise Page
+### Mindfulness Exercise Page
 
 On the navigation bar at the top, click on the "Mindfulness Exercise" to exercise page. The page will show a random Inspirational Quote (on the left) and Journal Entry (on the right). New messages will show up when you refresh the page. 
 
@@ -196,4 +199,7 @@ Here we go! You can feel free to login again using username: "badgerbuddy" and t
 
 ![iteration_1_reset_password_4](/readme_images/iteration_1_reset_password_4.png)
 
-Congradulation :tada: you have finished the walkthrough in iteration 2! Thanks for spending the time reading this document, I really appreciate it!
+### Anonymity, Search Function
+Please note that features implemented in iteration 3 are not included in this walkthrough, though the instructions are well explanatory. Pleae feel free to test around those features!
+
+**Congradulation :tada: you have finished the walkthrough! Thanks for spending the time reading this document, I really appreciate it!**
