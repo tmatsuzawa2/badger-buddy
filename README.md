@@ -4,6 +4,7 @@ Hello there! It has been a great semester and thank you so much for your helps!
 Badger Buddy is a webpage that desires to help UW students with mental difficulties and create a platform for them to communicate.
 Until iteration 3, we have accomplished the following features: 
 * Account creation and management
+* Help Resource and Journal prompt page
 * Forum board: create posts, reply to individual post, edit and delete posts and replies
 * Forum board: anonymity options for posts and replies
 * Forum board: search post based on names
