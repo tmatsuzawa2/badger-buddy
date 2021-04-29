@@ -150,7 +150,17 @@ class PostTests(TestCase):
         # Check if the html response contains the post
         self.assertTrue("sometitle" in response.content.decode("utf-8"))
 
+    def test_anonymous_own_post(self):
+        # Create reply
+        response = self.client.post("/board/create-post", {'title': 'sometitle', 'details': 'somedetails', 'anonymous': 'True'})
+        # View the post
+        response = self.client.get("/board/view-post/2")
+        # Check if the name is hidden
+        self.assertTrue("Anonymous to other students" in response.content.decode("utf-8"))
+
     def test_anonymous_post(self):
+        self.client.logout()
+        self.client.force_login(self.user2)
         # Create reply
         response = self.client.post("/board/create-post", {'title': 'sometitle', 'details': 'somedetails', 'anonymous': 'True'})
         # View the post
@@ -452,3 +462,19 @@ class HelpExerciseTest(TestCase):
         # If the author is null, then automatically set to anonymous
         response = self.client.post('/exercises/')
         self.assertTrue("-Anonymous" in response.content.decode("utf-8"))
+        
+    def test_breathe_exercise(self):
+        # Login
+        response = self.client.post('/users/login/', {'username': 'jthal7', 'password': 'badgerBuddy'}, follow=True)
+        # If the author is null, then automatically set to anonymous
+        response = self.client.post('/exercises/')
+        # Check if the breathe.gif is displayed
+        self.assertTrue("breathe.gif" in response.content.decode("utf-8"))
+
+class Handle404Tests(TestCase):
+    def test_handler_renders_template_response(self):
+        response = self.client.get('/adsfa/')
+        # The 404 page was correctly handled
+        self.assertEqual(response.status_code, 200)
+        # Display the right page
+        self.assertTrue('404' in response.content.decode("utf-8"))
