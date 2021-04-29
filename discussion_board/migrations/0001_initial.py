@@ -51,13 +51,6 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='Tags',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=128)),
-            ],
-        ),
-        migrations.CreateModel(
             name='Reply',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
@@ -77,14 +70,6 @@ class Migration(migrations.Migration):
                 ('user_type', models.TextField(choices=[('Overseer', 'Overseer'), ('Student', 'Student')], default='Student')),
                 ('anonymous', models.BooleanField(default=True)),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Post_Tags',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('post', models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, to='discussion_board.post')),
-                ('tag', models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, to='discussion_board.tags')),
             ],
         ),
         migrations.CreateModel(
