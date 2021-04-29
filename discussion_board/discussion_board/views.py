@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from ..models import Post, Reply
 from .forms import CreatePostForm, CreateReplyForm
 from django.views.generic.edit import UpdateView
-from django.urls import reverse
+from django.db.models import Q
 
 # Create your views here.
 
@@ -47,7 +47,7 @@ def create_reply(request, post_id):
             anonymous = form.cleaned_data['anonymous']
             r = Reply(post=post, details=details, anonymous=anonymous, user=request.user)
             r.save()
-            return HttpResponseRedirect('/board')
+            return HttpResponseRedirect('/board/view-post/' + str(r.post.id))
 
     else:
         form = CreateReplyForm()
@@ -126,3 +126,17 @@ class EditReply(UpdateView):
 
     def get_success_url(self):
         return '/board/view-post/' + str(self.object.post.id)
+
+def search(request):
+    # search view based on https://learndjango.com/tutorials/django-search-tutorial
+    query = request.GET.get('q')
+    posts = Post.objects.filter(
+        Q(title__icontains=query) | Q(details__icontains=query)
+    )
+    replies = Reply.objects.all()
+    context = {
+        'posts': posts,
+        'replies': replies,
+        'query': query,
+    }
+    return render(request, 'discussion_board/search-results.html', context)

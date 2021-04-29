@@ -54,20 +54,7 @@ class Post(models.Model):
         display_name = self.user.username
         if self.anonymous:
             display_name  += " (Anonymous to other students)"
-        return display_name 
-
-
-class Tags(models.Model):
-    title = models.CharField(max_length=128)
-
-    def __str__(self):
-        return self.title
-
-
-class Post_Tags(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, default=None)
-    tag = models.ForeignKey(Tags, on_delete=models.CASCADE, default=None)
-
+        return display_name
 
 class Reply(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, default=None)
