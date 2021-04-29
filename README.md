@@ -7,6 +7,7 @@ Until iteration 3, we have accomplished the following features:
 * Forum board: create posts, reply to individual post, edit and delete posts and replies
 * Forum board: anonymity options for posts and replies
 * Forum board: search post based on names
+* Breathe Exercise
 * 404 Pages
 * Major UI improvements
 
