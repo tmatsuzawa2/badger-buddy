@@ -202,4 +202,4 @@ Here we go! You can feel free to login again using username: "badgerbuddy" and t
 ### Anonymity, Search Function
 Please note that features implemented in iteration 3 are not included in this walkthrough, though the instructions are well explanatory. Pleae feel free to test around those features!
 
-**Congradulation :tada: you have finished the walkthrough! Thanks for spending the time reading this document, I really appreciate it!**
+**Congratulation :tada: you have finished the walkthrough! Thanks for spending the time reading this document, I really appreciate it!**
