@@ -47,7 +47,7 @@ def create_reply(request, post_id):
             anonymous = form.cleaned_data['anonymous']
             r = Reply(post=post, details=details, anonymous=anonymous, user=request.user)
             r.save()
-            return HttpResponseRedirect('/board')
+            return HttpResponseRedirect('/board/view-post/' + str(r.post.id))
 
     else:
         form = CreateReplyForm()
