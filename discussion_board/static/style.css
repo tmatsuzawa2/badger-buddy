@@ -83,7 +83,7 @@ footer {
     /* border: 2px solid gray; */
     /* color: black; */
     /* margin: 100px; */
-    margin-top: 120px;
+    margin-top: 20px;
     margin-left: 200px;
     position: fixed;
     width: 300px;
@@ -96,7 +96,7 @@ footer {
     /* border: 2px solid gray; */
     /* color: black; */
     /* margin: 100px; */
-    margin-top: 20px;
+    margin-top: 70px;
     margin-left: 200px;
     position: fixed;
     width: 300px;
@@ -109,7 +109,7 @@ footer {
     /* border: 2px solid gray; */
     /* color: black; */
     /* margin: 100px; */
-    margin-top: 70px;
+    margin-top: 120px;
     margin-left: 200px;
     position: fixed;
     width: 300px;
@@ -122,7 +122,7 @@ footer {
     /* border: 2px solid gray; */
     /* color: black; */
     /* margin: 100px; */
-    margin-top: 70px;
+    margin-top: 120px;
     margin-left: 200px;
     position: fixed;
     width: 300px;
@@ -137,7 +137,7 @@ footer {
     /* border: 2px solid gray; */
     /* color: black; */
     /* margin: 100px; */
-    margin-top: 20px;
+    margin-top: 70px;
     margin-left: 200px;
     position: fixed;
     width: 300px;
@@ -220,6 +220,14 @@ footer {
     margin-bottom: 60px;
 }
 
+#back-button {
+    background-color:#68C8B5;
+    border-radius: 10px;
+    border: black;
+    margin-top: 20px;
+    margin-left: 200px;
+    position: fixed;
+    width: 300px;
 #breathe {
     display: block;
     margin-left: auto;

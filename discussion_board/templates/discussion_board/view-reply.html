@@ -32,15 +32,6 @@
                 </div>
                 </a>
             </div>
-            <div>
-                <a href="{% url 'view-post' reply.post.id %}" class="btn btn-primary" id="back-button">
-                    View Original Post
-                </a>
-            </div>
-    {% else %}
-    <p style="color: black; width:50%; margin-left:50px; font-size: 16px;">You haven't login yet. Please login first. <br>
-      <a href="{% url 'login' %}" class="btn btn-primary btn-block" style="background-color:#FBC95B; border: 0px; width:150px;">Login here</a></p>
-    {% endif %}
         </div>
            <div class = 'col'>
                {% if user == reply.user %}
@@ -53,9 +44,16 @@
                       Edit Reply
                 </a>
                {% endif %}
+               <a href="{% url 'view-post' reply.post.id %}" class="btn btn-primary" id="back-button">
+                    View Original Post
+                </a>
           </div>
       </div>
     </div>
+  {% else %}
+    <p style="color: black; width:50%; margin-left:50px; font-size: 16px;">You haven't login yet. Please login first. <br><br>
+      <a href="{% url 'login' %}" class="btn btn-primary btn-block" style="background-color:#FBC95B; border: 0px; width:150px;">Login here</a></p>
+  {% endif %}
   </body>
 
 {% endblock %}

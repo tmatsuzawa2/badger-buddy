@@ -14,7 +14,7 @@
   </head>
   <body>
     {% if user.is_authenticated %}
-    <div style="color: black; width:50%; margin-left:50px;">
+    <div style="color: black; width:50%; margin-left:100px; margin-bottom:60px;">
         {% for post in posts %}
         <div class="list-group" id="post">
           <a href="{% url 'view-post' post.id %}" class="list-group-item list-group-item-action flex-column align-items-start" id="inner-post">

@@ -14,7 +14,7 @@
   </head>
   <body>
     {% if user.is_authenticated %}
-    <div style="color: black; width:50%; margin-left:50px;">
+    <div style="color: black; width:50%; margin-left:50px; margin-bottom: 60px;">
         {% for reply in replies %}
                     <div class="list-group" id="reply">
                         <a href="{% url 'view-reply' reply.id %}" class="list-group-item list-group-item-action flex-column align-items-start" id="inner-reply">
