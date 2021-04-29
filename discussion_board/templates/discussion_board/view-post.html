@@ -25,7 +25,11 @@
                   <small> {{ post.create_date }} </small>
                 </div>
                 <p>{{post.details}}</p>
-                <small> Posted By: {{ post.user.username }} </small>
+                {% if user == post.user %}
+                  <small> Posted By: {{ post.super_display_user }} </small>
+                {% else %}
+                  <small> Posted By: {{ post.display_user }} </small>
+                {% endif %}
               </a>
             </div>
             {% if replies %}
@@ -34,7 +38,13 @@
                         <a href="{% url 'view-reply' reply.id %}" class="list-group-item list-group-item-action flex-column align-items-start" id="inner-reply">
                         <p id="reply-details">{{reply.details}}</p>
                         <div class="d-flex w-100 justify-content-between">
-                          <h8 class="mb-1"><small> Posted By: {{ reply.user.username }} </small></h8>
+                          <h8 class="mb-1">
+                            {% if user == reply.user %}
+                              <small> Posted By: {{ reply.super_display_user }} </small>
+                            {% else %}
+                              <small> Posted By: {{ reply.display_user }} </small>
+                            {% endif %}
+                          </h8>
                           <small> {{ reply.create_date }} </small>
                         </div>
 
@@ -42,17 +52,14 @@
                     </div>
                 {% endfor %}
           {% endif %}
-    {% else %}
-    <p style="color: black; width:50%; margin-left:50px; font-size: 16px;">You haven't login yet. Please login first. <br><br>
-      <a href="{% url 'login' %}" class="btn btn-primary btn-block" style="background-color:#FBC95B; border: 0px; width:150px;">Login here</a></p>
-    {% endif %}
+
         </div>
           <div class = 'col'>
               <a href="{% url 'create-reply' post.id %}" class="btn btn-primary" id="create-reply-button">
             Create reply
           </a>
             {% if user == post.user %}
-            <a href="{% url 'delete-post' post.id %}" class="btn btn-primary" id="delete-post-button">
+            <a href="{% url 'delete-post' post.id %}" class="btn btn-primary" id="delete-post-button" onclick="return confirm('Are you sure you want to delete this item?');">
               Delete Post
             </a>
             {% endif %}
@@ -64,5 +71,9 @@
           </div>
       </div>
     </div>
+  {% else %}
+    <p style="color: black; width:50%; margin-left:50px; font-size: 16px;">You haven't login yet. Please login first. <br><br>
+      <a href="{% url 'login' %}" class="btn btn-primary btn-block" style="background-color:#FBC95B; border: 0px; width:150px;">Login here</a></p>
+    {% endif %}
   </body>
 {% endblock %}

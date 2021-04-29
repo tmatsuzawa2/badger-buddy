@@ -10,23 +10,28 @@ class CreatePostForm(forms.Form):
                             max_length=8192,
                             widget=forms.TextInput(attrs={'class': 'form-control'}))
 
+    anonymous = forms.BooleanField(label='Anonymous',
+                            widget=forms.CheckboxInput(),
+                            required=False)
+    # Not needed because django has built-in validation already
+    '''
     def check_title_details(self):
         title = self.cleaned_data['title']
         details = self.cleaned_data['details']
-        if len(title) == 0 or len(details) == 0:
-            raise ValidationError('Invalid - title or details should not be empty')
-        else:
-            return title, details
-
+        return title, details
+    '''
 class CreateReplyForm(forms.Form):
     details = forms.CharField(label='Details',
                             max_length=1024,
                             widget=forms.TextInput(attrs={'class': 'form-control'}))
 
+    anonymous = forms.BooleanField(label='Anonymous',
+                            widget=forms.CheckboxInput(),
+                            required=False)
+    # Not needed because django has built-in validation already
+    '''
     def check_details(self):
         details = self.cleaned_data['details']
-        if len(details) == 0:
-            raise ValidationError('Invalid - details should not be empty')
-        else:
-            return details
+        return details
+    '''
 

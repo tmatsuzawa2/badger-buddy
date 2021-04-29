@@ -23,13 +23,14 @@
         <li>First Name: {{ user.first_name }} </li>
         <li>Last Name: {{ user.last_name }} </li>
         <li>Email: {{ user.email }} </li>
-        <li>Anonymity: {{ user.profile.anonymous }} </li>
       </ul>
       </div>
       <a class="btn btn-primary" href="{% url 'edit_profile' %}" style="background-color:#EA743F; border: 0px; width=50%; margin-left: 30px; margin-top:10px;">Edit Profile</a>
+      <a class="btn btn-primary" href="{% url 'posts_profile' %}" style="background-color:#EA743F; border: 0px; width=50%; margin-left: 10px; margin-top:10px;">View Post History</a>
+      <a class="btn btn-primary" href="{% url 'reply_profile' %}" style="background-color:#EA743F; border: 0px; width=50%; margin-left: 10px; margin-top:10px;">View Reply History</a>
     </div>
     {% else %}
-    <p style="color: black; width:50%; margin-left:50px; font-size: 16px;">You haven't login yet. Please login first. <br>
+    <p style="color: black; width:50%; margin-left:50px; font-size: 16px;">You haven't login yet. Please login first. <br><br>
       <a href="{% url 'login' %}" class="btn btn-primary btn-block" style="background-color:#FBC95B; border: 0px; width:150px;">Login here</a></p>
     {% endif %}
   </body>

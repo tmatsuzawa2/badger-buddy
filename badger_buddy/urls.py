@@ -21,6 +21,8 @@ from discussion_board.users.forms import EmailValidationOnForgotPassword
 from django_registration.backends.activation.views import RegistrationView
 from discussion_board.users.forms import UserRegistrationForm
 
+handler404 = 'discussion_board.error_handling.views.page_not_found'
+
 urlpatterns = [
     path('board/', include('discussion_board.discussion_board.urls')),
     path('users/password_reset/', auth_views.PasswordResetView.as_view(form_class=EmailValidationOnForgotPassword), name='password_reset'),
