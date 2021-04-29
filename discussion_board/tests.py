@@ -5,7 +5,7 @@ from django.contrib import auth
 from django.test import TestCase
 import datetime
 from .discussion_board.forms import CreatePostForm, CreateReplyForm
-from .models import Post, Tags, Post_Tags, Reply, Meeting, MeetingUsers, Profile, Quotes, Prompts
+from .models import Post, Reply, Meeting, MeetingUsers, Profile, Quotes, Prompts
 from django.contrib.auth.models import User as User
 
 
@@ -28,10 +28,6 @@ class ModelTests(TestCase):
                             create_date=datetime.datetime.now(),
                             user=User.objects.get(username="jthal7"))
         response = self.client.post('/users/login/', {'username': 'jthal7', 'password': 'badgerBuddy'}, follow=True)
-        Tags.objects.create(title="Discussion")
-        Tags.objects.create(title="Mental Help")
-        Post_Tags.objects.create(post=Post.objects.get(title="Mental Help 2"),
-                                 tag=Tags.objects.create(title="Mental Help"))
         Reply.objects.create(post=Post.objects.get(title="Mental Help 2"),
                              details="I would love to help.",
                              create_date=datetime.datetime.now(),
