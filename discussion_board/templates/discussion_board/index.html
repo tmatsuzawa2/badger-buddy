@@ -38,6 +38,9 @@
       {% endif %}
         </div>
         <div class="col">
+          <form action="{% url 'search-results' %}" method="get" >
+            <input name="q" type="text" placeholder="Search posts..." id="search-bar">
+          </form>
           <a href="/board/create-post" class="btn btn-primary btn-block" id="create-button">
             Create post
           </a>
