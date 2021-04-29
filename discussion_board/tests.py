@@ -3,7 +3,7 @@ from django.test import TestCase
 # Create your tests here.
 from django.contrib import auth
 from django.test import TestCase
-import datetime
+from django.utils import timezone
 from .discussion_board.forms import CreatePostForm, CreateReplyForm
 from .models import Post, Reply, Meeting, MeetingUsers, Profile, Quotes, Prompts
 from django.contrib.auth.models import User as User
@@ -21,19 +21,19 @@ class ModelTests(TestCase):
         user2.set_password('badgerBuddy')
         Post.objects.create(title="Mental Help",
                             details= "I am wondering if anyone else is lonely right now",
-                            create_date=datetime.datetime.now(),
+                            create_date=timezone.now(),
                             user=User.objects.get(username="jthal"))
         Post.objects.create(title="Mental Help 2",
                             details="I recieved help from jthals post",
-                            create_date=datetime.datetime.now(),
+                            create_date=timezone.now(),
                             user=User.objects.get(username="jthal7"))
         response = self.client.post('/users/login/', {'username': 'jthal7', 'password': 'badgerBuddy'}, follow=True)
         Reply.objects.create(post=Post.objects.get(title="Mental Help 2"),
                              details="I would love to help.",
-                             create_date=datetime.datetime.now(),
+                             create_date=timezone.now(),
                              user=User.objects.get(username="jthal"))
         Meeting.objects.create(link="https://www.zoom.us/",
-                               date_time=datetime.datetime.now(),
+                               date_time=timezone.now(),
                                post=Post.objects.get(title="Mental Help 2"))
         MeetingUsers.objects.create(meeting=Meeting.objects.get(post=Post.objects.get(title="Mental Help 2")),
                                     user=User.objects.get(username="jthal7"))
@@ -91,7 +91,7 @@ class PostTests(TestCase):
         user2.set_password('badgerBuddy')
         Post.objects.create(title="Mental Help 2",
                             details="I recieved help from jthals post",
-                            create_date=datetime.datetime.now(),
+                            create_date=timezone.now(),
                             user=User.objects.get(username="jthal7"))
 
         self.user = User.objects.create_superuser(username="testUser", password="TestUserPass",
@@ -213,11 +213,11 @@ class ReplyTests(TestCase):
         user2.set_password('badgerBuddy')
         Post.objects.create(title="Mental Help 2",
                             details="I recieved help from jthals post",
-                            create_date=datetime.datetime.now(),
+                            create_date=timezone.now(),
                             user=User.objects.get(username="jthal7"))
         Post.objects.create(title="Mental Help 3",
                             details="I recieved help from jthals post",
-                            create_date=datetime.datetime.now(),
+                            create_date=timezone.now(),
                             user=User.objects.get(username="jthal7"))
 
         self.user = User.objects.get(username="jthal7")
