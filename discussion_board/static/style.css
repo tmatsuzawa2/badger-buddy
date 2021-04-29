@@ -228,4 +228,12 @@ footer {
     margin-left: 200px;
     position: fixed;
     width: 300px;
+#breathe {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 60px;
+    width: 350px;
+    border-radius: 10px;
 }
