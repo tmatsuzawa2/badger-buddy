@@ -128,6 +128,7 @@ class EditReply(UpdateView):
         return '/board/view-post/' + str(self.object.post.id)
 
 def search(request):
+    # search view based on https://learndjango.com/tutorials/django-search-tutorial
     query = request.GET.get('q')
     posts = Post.objects.filter(
         Q(title__icontains=query) | Q(details__icontains=query)
