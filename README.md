@@ -1,15 +1,19 @@
 # Badger Buddy Final Demo
-Hello there! It has been a great semester and thank you so much for your helps!
+Hello there! It has been a great semester, and thank you so much for your help!
 
-Badger Buddy is a webpage that desires to help UW students with mental difficulties and create a platform for them to communicate.
-Until iteration 3, we have accomplished the following features: 
+Badger Buddy is a website that gives UW students a platform to communicate with their peers about important issues such as mental health struggles. 
+
+Prior to iteration 3, we accomplished the following features: 
 * Account creation and management
-* Help Resource and Journal prompt page
+* Help Resource and Journal Prompt pages
 * Forum board: create posts, reply to individual post, edit and delete posts and replies
-* Forum board: anonymity options for posts and replies
-* Forum board: search post based on names
-* Breathe Exercise
-* 404 Pages
+
+During iteration 3, we accomplished the following features:
+* Forum board: anonymity option for posts and replies
+* Forum board: search posts based on keyword in post title or details
+* User dashboard: display post or reply history
+* Breathing Exercise
+* Custom 404 page
 * Major UI improvements
 
 ## Setup
@@ -18,7 +22,7 @@ Until iteration 3, we have accomplished the following features:
 3. Open the virtual environment and install following packages:
    * Django: <code>pip install django</code>
    * Django-registration: <code>pip install django-registration</code>
-4. Inside the virtual environment, run the surver <code>python3 manage.py runserver --insecure</code> if you are using python3; <code>python manage.py runserver --insecure</code> if you are using python. <br/> **Please note that we have changed the command because we have to be out of debug mode in order to achieve 404 page, and in that case the server won't load the local static files (e.g. images) unless the "--insecure" tag is turned on.**
+4. Inside the virtual environment, run the server <code>python3 manage.py runserver --insecure</code> if you are using python3; <code>python manage.py runserver --insecure</code> if you are using python. <br/> **Please note that we have changed the command because we have to be out of debug mode in order to display the custom 404 page, and in that case Django won't handle loading the static files (e.g. images) unless the "--insecure" flag is used.**
 5. In your browser, redirect to http://localhost:8000/users/login/ to start the adventure!
 
 ## Testing
@@ -45,7 +49,7 @@ For the code coverage, we used coverage.py, a helper tool for measuring code cov
 
 
 ## Walkthrough
-### Please note that UI of this release are different than examples shown below, but the features are identical. 
+### Please note that the UI of this release are different than examples shown below, but the features are identical. 
 
 ### Register an account
 Go to the register page: http://localhost:8000/users/register/
@@ -204,4 +208,4 @@ Here we go! You can feel free to login again using username: "badgerbuddy" and t
 ### Anonymity, Search Function
 Please note that features implemented in iteration 3 are not included in this walkthrough, though the instructions are well explanatory. Pleae feel free to test around those features!
 
-**Congratulation :tada: you have finished the walkthrough! Thanks for spending the time reading this document, I really appreciate it!**
+**Congratulation :tada: you have finished the walkthrough! Thanks for spending the time to read this document, we really appreciate it!**
