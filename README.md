@@ -205,7 +205,7 @@ Here we go! You can feel free to login again using username: "badgerbuddy" and t
 
 ![iteration_1_reset_password_4](/readme_images/iteration_1_reset_password_4.png)
 
-### Anonymity, Search Function
-Please note that features implemented in iteration 3 are not included in this walkthrough, though the instructions are well explanatory. Pleae feel free to test around those features!
+### Anonymity, Search Function, etc.
+Please note that features implemented in iteration 3 are not included in this walkthrough. Pleae feel free to test those features!
 
-**Congratulation :tada: you have finished the walkthrough! Thanks for spending the time to read this document, we really appreciate it!**
+**Congratulations :tada: you have finished the walkthrough! Thanks for spending the time to read this document, we really appreciate it!**
